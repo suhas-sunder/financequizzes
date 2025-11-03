@@ -1642,48 +1642,34 @@ export default function BusinessQuiz({}: Route.ComponentProps) {
     setAnswers({});
   };
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebSite",
-        name: "Finance Quizzes",
-        url: "https://www.financequizzes.com/",
-      },
-      {
-        "@type": "FAQPage",
-        mainEntity: [
-          ...faqs.map((f) => ({
-            "@type": "Question",
-            name: f.q,
-            acceptedAnswer: { "@type": "Answer", text: f.a },
-          })),
-          ...questionBank.map((q) => ({
-            "@type": "Question",
-            name: q.q,
-            acceptedAnswer: { "@type": "Answer", text: q.correct },
-          })),
-        ],
-      },
-    ],
-  };
-
   return (
     <main className="bg-white text-[#0B1B2B]">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-
       {/* QUIZ SECTION FIRST */}
       <section
-        className="relative bg-[#F9FBFD] py-10 px-4 border-b border-slate-200"
+        className="relative bg-[#F9FBFD] pb-10 px-4 border-b border-slate-200"
         style={{
           backgroundImage:
             "radial-gradient(circle at 1px 1px, #E5E9EE 1px, transparent 0)",
           backgroundSize: "20px 20px",
         }}
       >
+        {/* === Breadcrumb navigation (visible) === */}
+        <nav
+          className="text-sm text-slate-600 px-6 pb-4 pt-3 max-w-6xl mx-auto"
+          aria-label="Breadcrumb"
+        >
+          <ol className="list-none p-0 inline-flex space-x-2">
+            <li>
+              <a href="/" className="text-teal-700 hover:underline font-medium">
+                Home
+              </a>
+            </li>
+            <li className="text-slate-400">›</li>
+            <li aria-current="page" className="text-slate-700 font-semibold">
+              Learn Business Quizzes
+            </li>
+          </ol>
+        </nav>
         <div className="mx-auto max-w-6xl text-center">
           <div className="mx-auto w-full sm:w-[720px] text-left rounded-3xl border border-slate-200 bg-white px-10 py-8 shadow-xl">
             {/* Stats row */}
@@ -1890,6 +1876,84 @@ export default function BusinessQuiz({}: Route.ComponentProps) {
           ))}
         </div>
       </section>
+      {/* === Structured Data: WebSite + FAQ + Q&A === */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Finance Quizzes",
+            url: "https://www.financequizzes.com/",
+            potentialAction: {
+              "@type": "SearchAction",
+              target:
+                "https://www.financequizzes.com/search?q={search_term_string}",
+              "query-input": "required name=search_term_string",
+            },
+          }),
+        }}
+      />
+
+      {/* === FAQPage (for FAQ section only) === */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqs.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          }),
+        }}
+      />
+
+      {/* === QAPage (for quiz questions, not FAQ) === */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "QAPage",
+            mainEntity: questionBank.slice(0, 20).map((q) => ({
+              "@type": "Question",
+              name: q.q,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: q.correct,
+              },
+            })),
+          }),
+        }}
+      />
+
+      {/* === BreadcrumbList (for structured data) === */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: "https://www.financequizzes.com/",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Learn Business Quizzes",
+                item: "https://www.financequizzes.com/learn-business-quizzes",
+              },
+            ],
+          }),
+        }}
+      />
     </main>
   );
 }

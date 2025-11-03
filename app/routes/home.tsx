@@ -1222,40 +1222,8 @@ export default function Home({}: Route.ComponentProps) {
     setAnswers({});
   };
 
-  // Combine FAQ and quiz Q&A for JSON-LD
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebSite",
-        name: "Finance Quizzes",
-        url: "https://www.financequizzes.com/",
-      },
-      {
-        "@type": "FAQPage",
-        mainEntity: [
-          ...faqs.map((f) => ({
-            "@type": "Question",
-            name: f.q,
-            acceptedAnswer: { "@type": "Answer", text: f.a },
-          })),
-          ...questionBank.map((q) => ({
-            "@type": "Question",
-            name: q.q,
-            acceptedAnswer: { "@type": "Answer", text: q.correct },
-          })),
-        ],
-      },
-    ],
-  };
-
   return (
     <main className="bg-white text-[#0B1B2B]">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-
       {/* HERO QUIZ */}
       <section
         className="relative bg-[#F9FBFD] pt-8 pb-14 px-4 border-b border-slate-200"
@@ -1554,6 +1522,60 @@ export default function Home({}: Route.ComponentProps) {
           ))}
         </div>
       </section>
+
+      {/* === Structured Data: FAQ + Q&A + Website === */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Finance Quizzes",
+            url: "https://www.financequizzes.com/",
+            potentialAction: {
+              "@type": "SearchAction",
+              target:
+                "https://www.financequizzes.com/search?q={search_term_string}",
+              "query-input": "required name=search_term_string",
+            },
+          }),
+        }}
+      />
+
+      {/* FAQ Schema (valid for rich results) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqs.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          }),
+        }}
+      />
+
+      {/* Q&A Schema (for quiz content, not counted as FAQ) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "QAPage",
+            mainEntity: questionBank.slice(0, 20).map((q) => ({
+              "@type": "Question",
+              name: q.q,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: q.correct,
+              },
+            })),
+          }),
+        }}
+      />
     </main>
   );
 }

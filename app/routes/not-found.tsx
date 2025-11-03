@@ -21,6 +21,23 @@ export function loader() {
 export default function NotFound({}: Route.ComponentProps) {
   return (
     <main className="min-h-[80vh] flex flex-col items-center justify-center text-center bg-[#F9FBFD] px-6 py-16">
+      {/* === Breadcrumb navigation (visible) === */}
+      <nav
+        className="text-sm text-slate-600 px-6 pb-4 pt-3 max-w-6xl mx-auto"
+        aria-label="Breadcrumb"
+      >
+        <ol className="list-none p-0 inline-flex space-x-2">
+          <li>
+            <a href="/" className="text-teal-700 hover:underline font-medium">
+              Home
+            </a>
+          </li>
+          <li className="text-slate-400">›</li>
+          <li aria-current="page" className="text-slate-700 font-semibold">
+            404 Not Found
+          </li>
+        </ol>
+      </nav>
       <div className="max-w-3xl">
         <h1 className="text-5xl font-extrabold text-[#0B1B2B] mb-4">
           404 - Page Not Found
@@ -147,8 +164,32 @@ export default function NotFound({}: Route.ComponentProps) {
             </a>
           </div>
         </div>
-
       </div>
+
+      {/* === BreadcrumbList (for structured data) === */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: "https://www.financequizzes.com/",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "404 Not Found",
+                item: "https://www.financequizzes.com/404-not-found",
+              },
+            ],
+          }),
+        }}
+      />
     </main>
   );
 }

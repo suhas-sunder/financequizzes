@@ -23,7 +23,25 @@ export function loader() {
 export default function PrivacyPolicy() {
   return (
     <main className="bg-white text-[#0B1B2B]">
-      <section className="max-w-4xl mx-auto px-6 py-16">
+      
+        {/* === Breadcrumb navigation (visible) === */}
+        <nav
+          className="text-sm text-slate-600 px-6 pb-4 pt-3 max-w-6xl mx-auto"
+          aria-label="Breadcrumb"
+        >
+          <ol className="list-none p-0 inline-flex space-x-2">
+            <li>
+              <a href="/" className="text-teal-700 hover:underline font-medium">
+                Home
+              </a>
+            </li>
+            <li className="text-slate-400">›</li>
+            <li aria-current="page" className="text-slate-700 font-semibold">
+              Privacy Policy
+            </li>
+          </ol>
+        </nav>
+      <section className="max-w-4xl mx-auto px-6 pb-16">
         <h1 className="text-4xl font-extrabold mb-8 text-center">
           Privacy Policy
         </h1>
@@ -106,6 +124,31 @@ export default function PrivacyPolicy() {
           </p>
         </div>
       </section>
+      
+      {/* === BreadcrumbList (for structured data) === */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: "https://www.financequizzes.com/",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Privacy Policy",
+                item: "https://www.financequizzes.com/privacy-policy",
+              },
+            ],
+          }),
+        }}
+      />
     </main>
   );
 }
