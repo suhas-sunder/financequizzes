@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Home -->
+  <url>
+    <loc>https://www.financequizzes.com/</loc>
+    <lastmod>2025-11-03T00:00:00Z</lastmod>
+    <priority>1.00</priority>
+  </url>
+
+  <!-- Main Quiz Pages -->
+  <url>
+    <loc>https://www.financequizzes.com/learn-banking-quizzes</loc>
+    <lastmod>2025-11-03T00:00:00Z</lastmod>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://www.financequizzes.com/learn-business-quizzes</loc>
+    <lastmod>2025-11-03T00:00:00Z</lastmod>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://www.financequizzes.com/learn-economics-quizzes</loc>
+    <lastmod>2025-11-03T00:00:00Z</lastmod>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://www.financequizzes.com/learn-history-quizzes</loc>
+    <lastmod>2025-11-03T00:00:00Z</lastmod>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://www.financequizzes.com/learn-insurance-quizzes</loc>
+    <lastmod>2025-11-03T00:00:00Z</lastmod>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://www.financequizzes.com/learn-investing-quizzes</loc>
+    <lastmod>2025-11-03T00:00:00Z</lastmod>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://www.financequizzes.com/learn-personal-finance-quizzes</loc>
+    <lastmod>2025-11-03T00:00:00Z</lastmod>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- Legal Pages -->
+  <url>
+    <loc>https://www.financequizzes.com/privacy-policy</loc>
+    <lastmod>2025-11-03T00:00:00Z</lastmod>
+    <priority>0.60</priority>
+  </url>
+
+  <url>
+    <loc>https://www.financequizzes.com/terms-of-service</loc>
+    <lastmod>2025-11-03T00:00:00Z</lastmod>
+    <priority>0.60</priority>
+  </url>
+</urlset>
