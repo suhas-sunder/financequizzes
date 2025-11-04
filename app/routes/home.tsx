@@ -1185,30 +1185,31 @@ export default function Home({}: Route.ComponentProps) {
     correct: string
   ) => {
     if (answers[question]) return; // prevent re-answering
+
     const newAnswers = { ...answers, [question]: selected };
     setAnswers(newAnswers);
 
-    const totalAnswered = Object.keys(newAnswers).length;
+    const isCorrect = selected === correct;
 
-    // Update streak and stats only after all 3 answered
-    if (totalAnswered === 3) {
+    // ✅ increment per question immediately
+    setStats((prev) => ({
+      ...prev,
+      answered: prev.answered + 1,
+      correct: prev.correct + (isCorrect ? 1 : 0),
+    }));
+
+    const totalAnsweredThisRound = Object.keys(newAnswers).length;
+
+    // ✅ streak logic only after 3 questions answered
+    if (totalAnsweredThisRound === 3) {
       const correctCount = displayed.filter(
         (q) => newAnswers[q.q] === q.correct
       ).length;
 
       setStats((prev) => {
-        const updated = { ...prev };
-        updated.answered += 3;
-        updated.correct += correctCount;
-
-        if (correctCount === 3) {
-          updated.streak += 1;
-          updated.bestStreak = Math.max(updated.bestStreak, updated.streak);
-        } else {
-          updated.streak = 0;
-        }
-
-        return updated;
+        const newStreak = correctCount === 3 ? prev.streak + 1 : 0;
+        const best = Math.max(prev.bestStreak, newStreak);
+        return { ...prev, streak: newStreak, bestStreak: best };
       });
     }
   };
@@ -1242,7 +1243,7 @@ export default function Home({}: Route.ComponentProps) {
           </h1>
 
           {/* Quiz Card */}
-          <div className="mx-auto w-full sm:w-[720px] text-left rounded-3xl border border-slate-200 bg-white p-10 shadow-xl">
+          <div className="mx-auto min-h-[53vh] w-full sm:w-[720px] text-left rounded-3xl border border-slate-200 bg-white p-10 shadow-xl">
             {/* Stats */}
             <div className="flex flex-wrap justify-between items-center mb-6">
               <div className="text-sm font-semibold text-slate-700">
@@ -1568,9 +1569,23 @@ export default function Home({}: Route.ComponentProps) {
             mainEntity: questionBank.slice(0, 20).map((q) => ({
               "@type": "Question",
               name: q.q,
+              text: q.q,
+              answerCount: 1,
+              author: {
+                "@type": "Person",
+                name: "Suhas Sunder",
+              },
+              datePublished: "2025-11-01", // or dynamic
               acceptedAnswer: {
                 "@type": "Answer",
                 text: q.correct,
+                author: {
+                  "@type": "Person",
+                  name: "Suhas Sunder",
+                },
+                url: "https://financequizzes.com",
+                datePublished: "2025-11-01",
+                upvoteCount: 0,
               },
             })),
           }),

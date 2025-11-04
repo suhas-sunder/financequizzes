@@ -1566,22 +1566,23 @@ export default function PersonalFinanceQuiz({}: Route.ComponentProps) {
     const newAnswers = { ...answers, [question]: selected };
     setAnswers(newAnswers);
 
-    setStats((prev) => {
-      const isCorrect = selected === correct;
-      return {
-        todayAnswered: prev.todayAnswered + 1,
-        todayCorrect: prev.todayCorrect + (isCorrect ? 1 : 0),
-        todayStreak: prev.todayStreak,
-        todayBest: prev.todayBest,
-        lastDate: new Date().toISOString().slice(0, 10),
-      };
-    });
+    const isCorrect = selected === correct;
+
+    // ✅ Preserve all fields with spread
+    setStats((prev) => ({
+      ...prev,
+      todayAnswered: prev.todayAnswered + 1,
+      todayCorrect: prev.todayCorrect + (isCorrect ? 1 : 0),
+      lastDate: new Date().toISOString().slice(0, 10),
+    }));
 
     const totalAnsweredThisRound = Object.keys(newAnswers).length;
+
     if (totalAnsweredThisRound === 3) {
       const correctCount = displayed.filter(
         (q) => newAnswers[q.q] === q.correct
       ).length;
+
       setStats((prev) => {
         const newStreak = correctCount === 3 ? prev.todayStreak + 1 : 0;
         const best = Math.max(prev.todayBest, newStreak);
@@ -1624,7 +1625,7 @@ export default function PersonalFinanceQuiz({}: Route.ComponentProps) {
           </ol>
         </nav>
         <div className="mx-auto max-w-6xl text-center">
-          <div className="mx-auto w-full sm:w-[720px] text-left rounded-3xl border border-slate-200 bg-white px-10 py-8 shadow-xl">
+          <div className="mx-auto w-full  min-h-[53vh] sm:w-[720px] text-left rounded-3xl border border-slate-200 bg-white px-10 py-8 shadow-xl">
             {/* Stats */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6 text-sm font-semibold text-slate-700 tabular-nums">
               <div className="rounded-lg bg-slate-50 border border-slate-200 px-3 py-2 text-center">
@@ -1873,9 +1874,23 @@ export default function PersonalFinanceQuiz({}: Route.ComponentProps) {
             mainEntity: questionBank.slice(0, 20).map((q) => ({
               "@type": "Question",
               name: q.q,
+              text: q.q,
+              answerCount: 1,
+              author: {
+                "@type": "Person",
+                name: "Suhas Sunder",
+              },
+              datePublished: "2025-11-01", // or dynamic
               acceptedAnswer: {
                 "@type": "Answer",
                 text: q.correct,
+                author: {
+                  "@type": "Person",
+                  name: "Suhas Sunder",
+                },
+                url: "https://financequizzes.com",
+                datePublished: "2025-11-01",
+                upvoteCount: 0,
               },
             })),
           }),
