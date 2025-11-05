@@ -1985,32 +1985,35 @@ export default function InvestingQuiz({}: Route.ComponentProps) {
         }}
       />
 
-      {/* === QAPage (for quiz questions, not FAQ) === */}
+      {/* === QAPage (for quiz data, optimized for Google Rich Results) === */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "QAPage",
-            mainEntity: questionBank.slice(0, 20).map((q) => ({
+            mainEntity: questionBank.map((q, i) => ({
               "@type": "Question",
               name: q.q,
               text: q.q,
               answerCount: 1,
+              url: `https://financequizzes.com/questions/${i + 1}`, // ✅ helps indexing per question
               author: {
                 "@type": "Person",
                 name: "Suhas Sunder",
+                url: "https://financequizzes.com/about", // ✅ resolves 'missing field url'
               },
-              datePublished: "2025-11-01", // or dynamic
+              datePublished: "2025-11-01T00:00:00+00:00", // ✅ ISO 8601 with timezone
               acceptedAnswer: {
                 "@type": "Answer",
                 text: q.correct,
                 author: {
                   "@type": "Person",
                   name: "Suhas Sunder",
+                  url: "https://financequizzes.com/about", // ✅ resolves warning
                 },
-                url: "https://financequizzes.com",
-                datePublished: "2025-11-01",
+                url: `https://financequizzes.com/questions/${i + 1}#answer`, // ✅ unique per answer
+                datePublished: "2025-11-01T00:00:00+00:00", // ✅ proper datetime format
                 upvoteCount: 0,
               },
             })),

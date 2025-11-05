@@ -1559,7 +1559,6 @@ export default function Home({}: Route.ComponentProps) {
         }}
       />
 
-      {/* Q&A Schema (for quiz content, not counted as FAQ) */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -1574,17 +1573,19 @@ export default function Home({}: Route.ComponentProps) {
               author: {
                 "@type": "Person",
                 name: "Suhas Sunder",
+                url: "https://financequizzes.com/about", // ✅ added
               },
-              datePublished: "2025-11-01", // or dynamic
+              datePublished: "2025-11-01T00:00:00+00:00", // ✅ full ISO 8601 with timezone
               acceptedAnswer: {
                 "@type": "Answer",
                 text: q.correct,
                 author: {
                   "@type": "Person",
                   name: "Suhas Sunder",
+                  url: "https://financequizzes.com/about", // ✅ added
                 },
-                url: "https://financequizzes.com",
-                datePublished: "2025-11-01",
+                url: "https://financequizzes.com", // already OK
+                datePublished: "2025-11-01T00:00:00+00:00", // ✅ fixed timezone format
                 upvoteCount: 0,
               },
             })),
