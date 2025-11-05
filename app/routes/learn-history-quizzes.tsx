@@ -1831,15 +1831,32 @@ export default function HistoryQuiz({}: Route.ComponentProps) {
         </div>
       </section>
 
-      {/* ANSWERS */}
-      <section id="quiz-answers" className="mx-auto max-w-5xl px-6 pt-16">
+      {/* === FAQ + Quiz Answers Combined Section === */}
+      <section id="faq-and-quiz" className="mx-auto max-w-5xl px-6 pt-16">
         <h3 className="text-3xl font-bold text-[#0B1B2B] mb-4 text-center">
-          Money History Quiz Answers
+          Finance FAQs & Quiz Answers
         </h3>
         <p className="text-slate-700 text-center max-w-2xl mx-auto mb-10">
-          Review all historical money questions and answers to better understand
-          the origins of modern finance.
+          Explore frequently asked questions and review finance quiz answers to
+          strengthen your understanding of key money concepts.
         </p>
+
+        {/* === FAQ Section === */}
+        <div className="rounded-2xl border border-slate-200 bg-white shadow-sm divide-y divide-slate-200 mb-12">
+          {faqs.map((f, i) => (
+            <div key={i} className="p-6">
+              <p className="font-semibold text-lg text-[#0B1B2B] mb-2">
+                FAQ {i + 1}. {f.q}
+              </p>
+              <p className="text-slate-700">
+                <span className="font-medium text-teal-700">Answer: </span>
+                {f.a}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* === Quiz Answers Section (same style) === */}
         <div className="rounded-2xl border border-slate-200 bg-white shadow-sm divide-y divide-slate-200">
           {questionBank.map((q, i) => (
             <div key={i} className="p-6">
@@ -1855,23 +1872,7 @@ export default function HistoryQuiz({}: Route.ComponentProps) {
         </div>
       </section>
 
-      {/* FAQ */}
-      <section id="faq" className="mx-auto max-w-5xl px-6 pt-24 pb-24">
-        <h2 className="text-4xl font-extrabold text-[#0B1B2B] mb-6 text-center">
-          Frequently Asked Questions
-        </h2>
-        <div className="rounded-2xl border border-slate-200 bg-white divide-y divide-slate-200 shadow-sm">
-          {faqs.map((f) => (
-            <details key={f.q} className="group open:bg-slate-50">
-              <summary className="cursor-pointer list-none px-6 py-5 text-lg font-semibold text-[#0B1B2B]">
-                {f.q}
-              </summary>
-              <div className="px-6 pb-5 text-slate-700 text-base">{f.a}</div>
-            </details>
-          ))}
-        </div>
-      </section>
-      {/* === Structured Data: WebSite + FAQ + Q&A === */}
+      {/* === Structured Data: WebSite + FAQ (merged for FAQ + Quiz Answers) === */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -1890,54 +1891,32 @@ export default function HistoryQuiz({}: Route.ComponentProps) {
         }}
       />
 
-      {/* === FAQPage (for FAQ section only) === */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "FAQPage",
-            mainEntity: faqs.map((f) => ({
-              "@type": "Question",
-              name: f.q,
-              acceptedAnswer: { "@type": "Answer", text: f.a },
-            })),
-          }),
-        }}
-      />
-
-      {/* === QAPage (for quiz data, optimized for Google Rich Results) === */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "QAPage",
-            mainEntity: questionBank.map((q, i) => ({
-              "@type": "Question",
-              name: q.q,
-              text: q.q,
-              answerCount: 1,
-              url: `https://financequizzes.com/questions/${i + 1}`, // ✅ helps indexing per question
-              author: {
-                "@type": "Person",
-                name: "Suhas Sunder",
-                url: "https://financequizzes.com/about", // ✅ resolves 'missing field url'
-              },
-              datePublished: "2025-11-01T00:00:00+00:00", // ✅ ISO 8601 with timezone
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: q.correct,
-                author: {
-                  "@type": "Person",
-                  name: "Suhas Sunder",
-                  url: "https://financequizzes.com/about", // ✅ resolves warning
+            mainEntity: [
+              // Regular FAQs
+              ...faqs.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: f.a,
                 },
-                url: `https://financequizzes.com/questions/${i + 1}#answer`, // ✅ unique per answer
-                datePublished: "2025-11-01T00:00:00+00:00", // ✅ proper datetime format
-                upvoteCount: 0,
-              },
-            })),
+              })),
+              // Quiz answers
+              ...questionBank.map((q) => ({
+                "@type": "Question",
+                name: q.q,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: q.correct,
+                },
+              })),
+            ],
           }),
         }}
       />
