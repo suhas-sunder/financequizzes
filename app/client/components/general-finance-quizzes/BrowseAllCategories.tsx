@@ -1,5 +1,4 @@
 import type { CategoryCard } from "./generalFinanceQuiz";
-import { CategoryGrid } from "./CategoryGrid";
 
 type Props = {
   allCategories: CategoryCard[];
