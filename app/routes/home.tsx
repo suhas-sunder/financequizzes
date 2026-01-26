@@ -19,9 +19,9 @@ interface LoaderData {
 }
 
 export function meta({}: Route.MetaArgs) {
-  const title = "Finance Quizzes | Test Your Finance and Investing Knowledge";
+  const title = "Finance Quizzes | 10‑Question Challenges + 3‑Question Streaks";
   const description =
-    "Free finance quizzes to test your money knowledge. Take focused quizzes in personal finance, investing, and banking with quick scoring and no signup.";
+    "Free finance quizzes to test your money knowledge. Take 10‑question challenge quizzes or play quick 3‑question streaks in personal finance and investing. No signup.";
   const url = "https://www.financequizzes.com/";
 
   return [
@@ -54,12 +54,12 @@ export function loader() {
         a: "No. This site is educational only and does not provide financial, tax, or investment advice.",
       },
       {
-        q: "What should I start with?",
-        a: "Start with the General Finance Quiz, then take focused quizzes in Personal Finance or Investing.",
+        q: "What is the difference between streaks and challenge quizzes?",
+        a: "Streak quizzes are 3 quick questions. Challenge quizzes are 10 questions and give a score summary at the end.",
       },
       {
         q: "How long does a quiz take?",
-        a: "Most quizzes are designed to be quick. You can usually finish a round in a few minutes.",
+        a: "Most quizzes are short. A streak takes under a minute, and a 10‑question challenge usually takes a few minutes.",
       },
     ],
   });
@@ -71,15 +71,18 @@ export default function Home({}: Route.ComponentProps) {
   return (
     <main className="bg-white text-[#0B1B2B]">
       <HeroSection
-        primaryCtaHref="/general-finance-quizzes"
-        personalFinanceHref="/learn-personal-finance-quizzes"
-        investingHref="/learn-investing-quizzes"
+        financeChallengeHref="/finance-quiz"
+        personalFinanceChallengeHref="/personal-finance-quiz"
+        investingChallengeHref="/investing-quiz"
+        financeStreakHref="/general-finance-quizzes"
+        personalFinanceStreakHref="/learn-personal-finance-quizzes"
+        investingStreakHref="/learn-investing-quizzes"
       />
 
       <PriorityPathsSection routes={priorityRoutes} />
 
       <ValuePropsSection
-        generalHref="/general-finance-quizzes"
+        financeChallengeHref="/finance-quiz"
         allCategoriesAnchorHref="#all-categories"
       />
 
