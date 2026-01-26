@@ -3,11 +3,11 @@ import { type RouteConfig, index, route } from "@react-router/dev/routes";
 export default [
   // Home page
   index("routes/home.tsx"),
-
+  route("general-finance-quizzes", "routes/general-finance-quizzes.tsx"),
   // Quiz category pages
   route(
     "learn-personal-finance-quizzes",
-    "routes/learn-personal-finance-quizzes.tsx"
+    "routes/learn-personal-finance-quizzes.tsx",
   ),
   route("learn-investing-quizzes", "routes/learn-investing-quizzes.tsx"),
   route("learn-banking-quizzes", "routes/learn-banking-quizzes.tsx"),
