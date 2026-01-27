@@ -13,18 +13,34 @@ type Props = {
 
   isComplete: boolean;
   finalScorePercent: number | null;
+  completionMs: number | null;
   scoreMessage: (correctCount: number) => string;
 
   answeredCount: number;
   correctCount: number;
   // Persisted device-local count of 10/10 completions.
   perfectCount: number;
+  // Best (fastest) completion time on this device.
+  bestTimeMs: number | null;
 
   onTryAnother: () => void;
 };
 
 function ordinalLabel(index: number) {
   return `${index + 1}.`;
+}
+
+function formatRunTime(ms: number | null): string {
+  if (!ms || !Number.isFinite(ms) || ms <= 0) return "—";
+  const totalSeconds = Math.max(0, Math.round(ms / 1000));
+  const seconds = totalSeconds % 60;
+  const totalMinutes = Math.floor(totalSeconds / 60);
+  const minutes = totalMinutes % 60;
+  const hours = Math.floor(totalMinutes / 60);
+
+  const pad2 = (n: number) => String(n).padStart(2, "0");
+  if (hours > 0) return `${hours}:${pad2(minutes)}:${pad2(seconds)}`;
+  return `${minutes}:${pad2(seconds)}`;
 }
 
 export function QuizQuestions({
@@ -37,11 +53,13 @@ export function QuizQuestions({
 
   isComplete,
   finalScorePercent,
+  completionMs,
   scoreMessage,
 
   answeredCount,
   correctCount,
   perfectCount,
+  bestTimeMs,
 
   onTryAnother,
 }: Props) {
@@ -190,11 +208,25 @@ export function QuizQuestions({
     };
   }, []);
 
+  function formatDuration(ms: number | null): string {
+    if (ms === null || !Number.isFinite(ms) || ms < 0) return "—";
+    const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    const mm = String(minutes).padStart(hours > 0 ? 2 : 1, "0");
+    const ss = String(seconds).padStart(2, "0");
+    return hours > 0 ? `${hours}:${mm}:${ss}` : `${mm}:${ss}`;
+  }
+
   async function handleShare() {
     if (!showEnd || finalScorePercent === null) return;
 
     const title = `${quizTitle} Results`;
-    const text = `Score: ${finalScorePercent}% (${correctCount}/${questions.length}).`;
+    const bestLabel = bestTimeMs && Number.isFinite(bestTimeMs) && bestTimeMs > 0
+      ? ` Best: ${formatRunTime(bestTimeMs)}.`
+      : "";
+    const text = `Score: ${finalScorePercent}% (${correctCount}/${questions.length}). Time: ${formatRunTime(completionMs)}.${bestLabel}`;
 
     const buildShareImage = async (): Promise<Blob> => {
       // Render a complete, deterministic results image that mirrors the UI.
@@ -203,9 +235,9 @@ export function QuizQuestions({
       // sees on the results card.
 
       const width = 1200;
-      // 16:9 cropped too aggressively for the full results card.
-      // Use a taller canvas so the rating + full stats strip fit.
-      const height = 900;
+      // Keep the shared image tight. The card already has generous padding,
+      // so a slightly shorter canvas avoids "dead" whitespace.
+      const height = 640;
 
       const canvas = document.createElement("canvas");
       canvas.width = width;
@@ -221,7 +253,7 @@ export function QuizQuestions({
       ctx.fillRect(0, 0, width, height);
 
       // Card
-      const pad = 72;
+      const pad = 64;
       const cardX = pad;
       const cardY = pad;
       const cardW = width - pad * 2;
@@ -266,7 +298,7 @@ export function QuizQuestions({
         `${weight} ${sizePx}px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial`;
 
       const left = cardX + 56;
-      let y = cardY + 70;
+      let y = cardY + 66;
 
       ctx.fillStyle = "#0B1B2B";
       ctx.font = safeFont(800, 42);
@@ -295,7 +327,7 @@ export function QuizQuestions({
 
       // Rating (10 stars)
       const ratingRight = cardX + cardW - 56;
-      const ratingLabelY = cardY + 114;
+      const ratingLabelY = cardY + 104;
       ctx.textAlign = "right";
       ctx.fillStyle = "#475569";
       ctx.font = safeFont(700, 18);
@@ -317,11 +349,13 @@ export function QuizQuestions({
         starX += starSize + starGap;
       }
 
-      // Stats strip (SCORE/PERFECT/QUESTIONS)
+      // Stats strip (SCORE/PERFECT/TIME)
       const stripX = cardX + 56;
       const stripW = cardW - 56 * 2;
       const stripH = 132;
-      const stripY = cardY + cardH - stripH - 78;
+      // Keep the stats strip visually connected to the headline content to avoid empty whitespace.
+      // Clamp so it never collides with the card footer.
+      const stripY = Math.min(cardY + cardH - stripH - 56, y + 92);
 
       // Strip background
       ctx.fillStyle = "#F9FBFD";
@@ -351,7 +385,7 @@ export function QuizQuestions({
       const values = [
         { label: "SCORE", value: `${correctCount}/${questions.length}` },
         { label: "PERFECT SCORES", value: String(perfectCount) },
-        { label: "QUESTIONS", value: String(questions.length) },
+        { label: "TIME", value: formatRunTime(completionMs) },
       ];
 
       for (let i = 0; i < values.length; i++) {
@@ -360,6 +394,13 @@ export function QuizQuestions({
         ctx.fillText(values[i].label, cx, labelY);
         valueStyle();
         ctx.fillText(values[i].value, cx, valueY);
+
+        // Add best time under TIME without changing the 3-column layout.
+        if (values[i].label === "TIME" && bestTimeMs && Number.isFinite(bestTimeMs) && bestTimeMs > 0) {
+          ctx.fillStyle = "#64748B";
+          ctx.font = safeFont(800, 14);
+          ctx.fillText(`BEST ${formatRunTime(bestTimeMs)}`, cx, valueY + 34);
+        }
       }
 
       // Footer (small, non-link branding to match "no link" sharing)
@@ -496,11 +537,11 @@ export function QuizQuestions({
                       // Default state (unanswered).
                       if (!isAnswered) {
                         classes +=
-                          " bg-teal-50 border-teal-100 text-teal-900 hover:bg-teal-100 hover:border-teal-200";
+                          " bg-teal-50 border-teal-100 text-teal-900 hover:bg-teal-100 hover:border-teal-200 cursor-pointer";
                       } else if (!isRevealed) {
                         // Answered but in "weight" delay. Keep it readable and not obviously blocked.
                         classes +=
-                          " bg-slate-50 border-slate-200 text-slate-800";
+                          " bg-slate-50 border-slate-200 text-slate-800 cursor-default";
                       } else {
                         // Revealed state.
                         if (isSelected && isCorrect) {
@@ -742,10 +783,13 @@ export function QuizQuestions({
               </div>
               <div>
                 <div className="text-xs font-semibold tracking-wide text-slate-500">
-                  QUESTIONS
+                  TIME
                 </div>
                 <div className="mt-1 text-xl font-extrabold text-slate-900">
-                  {questions.length}
+                  {formatRunTime(completionMs)}
+                </div>
+                <div className="mt-1 text-xs font-semibold text-slate-500">
+                  Best {formatRunTime(bestTimeMs)}
                 </div>
               </div>
             </div>
@@ -767,7 +811,7 @@ export function QuizQuestions({
                 className={
                   "inline-flex w-full items-center justify-center rounded-xl border px-6 py-3 text-base font-semibold shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2 sm:w-auto " +
                   (showEnd
-                    ? "border-slate-200 bg-white text-slate-900 hover:bg-slate-50"
+                    ? "border-slate-200 bg-white text-slate-900 hover:bg-slate-50 cursor-pointer"
                     : "cursor-not-allowed border-slate-100 bg-slate-50 text-slate-400")
                 }
               >
@@ -777,7 +821,7 @@ export function QuizQuestions({
               <button
                 type="button"
                 onClick={onTryAnother}
-                className="inline-flex w-full items-center justify-center rounded-xl bg-emerald-700 px-8 py-3 text-base font-bold text-white shadow-sm hover:bg-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2 sm:w-auto"
+                className="inline-flex w-full items-center justify-center rounded-xl bg-emerald-700 px-8 py-3 text-base font-bold text-white shadow-sm hover:bg-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2 sm:w-auto cursor-pointer"
               >
                 Try another set
               </button>

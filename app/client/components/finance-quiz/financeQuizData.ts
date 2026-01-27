@@ -82,24 +82,24 @@ export const FINANCE_QUIZ_SCORE_BANDS = [
 
 export const FINANCE_FAQS: FAQItem[] = [
   {
-    q: "How is the quiz scored?",
-    a: "Each set is 10 questions. Your score is the number you answer correctly out of 10.",
+    q: 'How is the quiz scored?',
+    a: 'Each set is 10 questions. Your score is the number you answer correctly out of 10.',
   },
   {
-    q: "What does “best streak” mean here?",
-    a: "New streak is your current consecutive correct answers within the active set. Best streak is the highest consecutive-correct streak you’ve reached on this device for this quiz.",
+    q: 'What do “Perfect scores” and “Best time” track?',
+    a: 'Perfect scores counts how many times you finish a 10-question set with a 10/10 on this device. Best time is the fastest completion time for a finished set on this device.',
   },
   {
-    q: "What kind of questions are included?",
-    a: "The pool covers broad finance vocabulary and concepts across everyday money, banking, credit, saving, investing, and planning.",
+    q: 'What kind of questions are included?',
+    a: 'The pool focuses on broad finance vocabulary and common concepts across everyday money, banking, credit, saving, investing, and planning.',
   },
   {
-    q: "Does a new set repeat questions?",
-    a: "Each set is randomized from the question pool and avoids duplicates within the same 10-question run.",
+    q: 'Does a new set repeat questions?',
+    a: 'Each set is randomized from the question pool and avoids duplicates within the same 10-question run.',
   },
   {
-    q: "Does this quiz provide financial advice?",
-    a: "No. It’s a general finance knowledge check and does not provide recommendations or guidance.",
+    q: 'Does this quiz provide financial advice?',
+    a: 'No. It’s a general finance knowledge check and does not provide recommendations or guidance.',
   },
 ];
 

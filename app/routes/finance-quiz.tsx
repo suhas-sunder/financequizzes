@@ -58,12 +58,14 @@ type StatsState = {
   answered: number;
   correct: number;
   perfectCount: number;
+  bestTimeMs: number | null;
 };
 
 type AnswerResult = "correct" | "incorrect";
 
 const QUIZ_QUESTION_COUNT = 10;
 const PERFECT_COUNT_STORAGE_KEY = "financequizzes:perfectCount:/finance-quiz";
+const BEST_TIME_STORAGE_KEY = "financequizzes:bestTimeMs:/finance-quiz";
 
 function safeGetLocalStorage(key: string): string | null {
   try {
@@ -165,14 +167,20 @@ export default function FinanceQuiz({}: Route.ComponentProps) {
     answered: 0,
     correct: 0,
     perfectCount: 0,
+    bestTimeMs: null,
   }));
 
   const [isComplete, setIsComplete] = useState(false);
   const [finalScorePercent, setFinalScorePercent] = useState<number | null>(
     null,
   );
+  const [completionMs, setCompletionMs] = useState<number | null>(null);
 
   const hasCountedPerfectRef = useRef(false);
+
+  // Wall-clock timing for a single run. Used only for end-of-run summary.
+  // Stored in a ref to avoid render churn and SSR/hydration mismatch.
+  const runStartMsRef = useRef<number>(Date.now());
 
   const timersRef = useRef<Record<string, number>>({});
   const quizCardRef = useRef<HTMLDivElement | null>(null);
@@ -181,9 +189,15 @@ export default function FinanceQuiz({}: Route.ComponentProps) {
     if (typeof window === "undefined") return;
     const saved = safeGetLocalStorage(PERFECT_COUNT_STORAGE_KEY);
     const perfectCount = saved ? Number(saved) : 0;
+    const savedBestTime = safeGetLocalStorage(BEST_TIME_STORAGE_KEY);
+    const bestTimeMs = savedBestTime ? Number(savedBestTime) : null;
     setStats((prev) => ({
       ...prev,
       perfectCount: Number.isFinite(perfectCount) ? perfectCount : 0,
+      bestTimeMs:
+        bestTimeMs !== null && Number.isFinite(bestTimeMs) && bestTimeMs > 0
+          ? bestTimeMs
+          : null,
     }));
   }, []);
 
@@ -193,10 +207,30 @@ export default function FinanceQuiz({}: Route.ComponentProps) {
   }, [stats.perfectCount]);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    safeSetLocalStorage(
+      BEST_TIME_STORAGE_KEY,
+      stats.bestTimeMs !== null ? String(stats.bestTimeMs) : "",
+    );
+  }, [stats.bestTimeMs]);
+
+  useEffect(() => {
     // Compute score once at completion.
     if (!isComplete && stats.answered === QUIZ_QUESTION_COUNT) {
       setIsComplete(true);
       setFinalScorePercent(computeFinalScore(stats.correct));
+      const ms = Math.max(0, Date.now() - runStartMsRef.current);
+      setCompletionMs(ms);
+
+      // Track best completion time for finished runs.
+      // Lower is better. Persist device-local only.
+      if (Number.isFinite(ms) && ms > 0) {
+        setStats((prev) => {
+          const nextBest =
+            prev.bestTimeMs === null || ms < prev.bestTimeMs ? ms : prev.bestTimeMs;
+          return nextBest === prev.bestTimeMs ? prev : { ...prev, bestTimeMs: nextBest };
+        });
+      }
 
       // Track "perfect score" completions deterministically.
       // Count at most once per run.
@@ -295,11 +329,14 @@ export default function FinanceQuiz({}: Route.ComponentProps) {
     setRevealed({});
     setIsComplete(false);
     setFinalScorePercent(null);
+    setCompletionMs(null);
+    runStartMsRef.current = Date.now();
     hasCountedPerfectRef.current = false;
     setStats((prev) => ({
       answered: 0,
       correct: 0,
       perfectCount: prev.perfectCount,
+      bestTimeMs: prev.bestTimeMs,
     }));
   };
 
@@ -361,10 +398,12 @@ export default function FinanceQuiz({}: Route.ComponentProps) {
                 onAnswer={handleAnswer}
                 isComplete={isComplete}
                 finalScorePercent={finalScorePercent}
+                completionMs={completionMs}
                 scoreMessage={scoreMessage}
                 answeredCount={stats.answered}
                 correctCount={stats.correct}
                 perfectCount={stats.perfectCount}
+                bestTimeMs={stats.bestTimeMs}
                 onTryAnother={resetRun}
               />
             )}
