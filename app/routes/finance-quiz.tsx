@@ -1,4 +1,5 @@
 import { json } from "@remix-run/node";
+import { buildCanonicalUrl, getSiteUrlFromEnv } from "../client/components/finance-quiz/seoCanonical.server";
 import type { Route } from "./+types/finance-quiz";
 import { useLoaderData } from "react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -17,17 +18,22 @@ import { FinanceQuizJsonLd } from "../client/components/finance-quiz/FinanceQuiz
 
 interface LoaderData {
   faqs: { q: string; a: string }[];
+  canonicalUrl: string;
 }
 
-export function meta({}: Route.MetaArgs) {
+
+export function meta({ data }: Route.MetaArgs) {
   const title = "Finance Quiz | FinanceQuizzes.com";
   const description =
     "Fast, interactive finance quiz in a 10-question challenge. Broad concepts across everyday money, banking, credit, saving, investing, and planning.";
-  const url = "https://www.financequizzes.com/finance-quiz";
+  const url = data?.canonicalUrl ?? "https://www.financequizzes.com/finance-quiz";
 
   return [
     { title },
     { name: "description", content: description },
+
+    // Indexing discipline
+    { name: "robots", content: "index,follow" },
 
     // Canonical discipline
     { rel: "canonical", href: url },
@@ -48,11 +54,16 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export function loader() {
+export function loader({ request }: Route.LoaderArgs) {
+  const siteUrl = getSiteUrlFromEnv(process.env);
+  const canonicalUrl = buildCanonicalUrl(request.url, siteUrl);
+
   return json<LoaderData>({
     faqs: FINANCE_FAQS,
+    canonicalUrl,
   });
 }
+
 
 type StatsState = {
   answered: number;
@@ -147,7 +158,7 @@ function computeFinalScore(correctCount: number) {
 }
 
 export default function FinanceQuiz({}: Route.ComponentProps) {
-  const { faqs } = useLoaderData() as LoaderData;
+  const { faqs, canonicalUrl } = useLoaderData() as LoaderData;
 
   const questionBank = FINANCE_QUIZ_QUESTION_BANK;
 
@@ -346,7 +357,7 @@ export default function FinanceQuiz({}: Route.ComponentProps) {
     }));
   };
 
-  const pageUrl = "https://www.financequizzes.com/finance-quiz";
+  const pageUrl = canonicalUrl;
 
   return (
     <main className="bg-white text-[#0B1B2B]">

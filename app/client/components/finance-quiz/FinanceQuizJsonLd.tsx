@@ -6,8 +6,17 @@ type Props = {
   pageUrl: string;
 };
 
+function toSiteUrl(pageUrl: string): string {
+  try {
+    const u = new URL(pageUrl);
+    return `${u.origin}/`;
+  } catch {
+    return "https://www.financequizzes.com/";
+  }
+}
+
 export function FinanceQuizJsonLd({ faqs, pageUrl }: Props) {
-  const siteUrl = "https://www.financequizzes.com/";
+  const siteUrl = toSiteUrl(pageUrl);
 
   const graph = [
     {
