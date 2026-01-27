@@ -278,11 +278,6 @@ export function FinanceArticle() {
             </div>
           </div>
         </div>
-
-        <div className="mx-auto mt-10 max-w-4xl text-center text-sm text-slate-500">
-          Quiz only. No financial advice, legal advice, or personalized
-          recommendations.
-        </div>
       </div>
     </section>
   );

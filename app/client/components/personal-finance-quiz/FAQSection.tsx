@@ -1,15 +1,15 @@
 import { useState } from "react";
 
-import { FINANCE_QUIZ_INTENT } from "./financeQuizData";
+import { PERSONAL_FINANCE_QUIZ_INTENT } from "./personalFinanceQuizData";
 
 type FAQItem = { q: string; a: string };
 
 export function FAQSection({ faqs }: { faqs: FAQItem[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const { topicLabel } = FINANCE_QUIZ_INTENT;
+  const { topicLabel } = PERSONAL_FINANCE_QUIZ_INTENT;
 
   return (
-    <section id="faq" className="mx-auto max-w-5xl px-6 pt-12 pb-20">
+    <section id="faq" className="mx-auto max-w-5xl px-6 pb-20">
       <h2 className="text-3xl font-bold text-[#0B1B2B] mb-6 text-center">
         {topicLabel} Quiz FAQs
       </h2>

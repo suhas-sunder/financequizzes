@@ -4,6 +4,8 @@ export default [
   // Home page
   index("routes/home.tsx"),
   route("finance-quiz", "routes/finance-quiz.tsx"),
+  route("personal-finance-quiz", "routes/personal-finance-quiz.tsx"),
+
   route("privacy-policy", "routes/privacy-policy.tsx"),
   route("terms-of-service", "routes/terms-of-service.tsx"),
 
