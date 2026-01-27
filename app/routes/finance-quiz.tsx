@@ -178,9 +178,9 @@ export default function FinanceQuiz({}: Route.ComponentProps) {
 
   const hasCountedPerfectRef = useRef(false);
 
-  // Wall-clock timing for a single run. Used only for end-of-run summary.
-  // Stored in a ref to avoid render churn and SSR/hydration mismatch.
-  const runStartMsRef = useRef<number>(Date.now());
+  // Wall-clock timing for a single run.
+  // Start timing on the first answer (not on page load) to avoid inflated times.
+  const runStartMsRef = useRef<number | null>(null);
 
   const timersRef = useRef<Record<string, number>>({});
   const quizCardRef = useRef<HTMLDivElement | null>(null);
@@ -208,10 +208,10 @@ export default function FinanceQuiz({}: Route.ComponentProps) {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    safeSetLocalStorage(
-      BEST_TIME_STORAGE_KEY,
-      stats.bestTimeMs !== null ? String(stats.bestTimeMs) : "",
-    );
+    // Do not overwrite an existing best time with an empty value.
+    // Only persist when we have a real best time.
+    if (stats.bestTimeMs === null) return;
+    safeSetLocalStorage(BEST_TIME_STORAGE_KEY, String(stats.bestTimeMs));
   }, [stats.bestTimeMs]);
 
   useEffect(() => {
@@ -219,7 +219,8 @@ export default function FinanceQuiz({}: Route.ComponentProps) {
     if (!isComplete && stats.answered === QUIZ_QUESTION_COUNT) {
       setIsComplete(true);
       setFinalScorePercent(computeFinalScore(stats.correct));
-      const ms = Math.max(0, Date.now() - runStartMsRef.current);
+      const startMs = runStartMsRef.current;
+      const ms = startMs ? Math.max(0, Date.now() - startMs) : 0;
       setCompletionMs(ms);
 
       // Track best completion time for finished runs.
@@ -277,6 +278,11 @@ export default function FinanceQuiz({}: Route.ComponentProps) {
   ) => {
     if (answers[question]) return;
 
+    // Start timing on first answer.
+    if (runStartMsRef.current === null) {
+      runStartMsRef.current = Date.now();
+    }
+
     setAnswers((prev) => ({ ...prev, [question]: selected }));
 
     const isCorrect = selected === correct;
@@ -330,7 +336,7 @@ export default function FinanceQuiz({}: Route.ComponentProps) {
     setIsComplete(false);
     setFinalScorePercent(null);
     setCompletionMs(null);
-    runStartMsRef.current = Date.now();
+    runStartMsRef.current = null;
     hasCountedPerfectRef.current = false;
     setStats((prev) => ({
       answered: 0,

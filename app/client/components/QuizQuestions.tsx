@@ -224,9 +224,9 @@ export function QuizQuestions({
 
     const title = `${quizTitle} Results`;
     const bestLabel = bestTimeMs && Number.isFinite(bestTimeMs) && bestTimeMs > 0
-      ? ` Best (mm:ss): ${formatRunTime(bestTimeMs)}.`
+      ? ` Best: ${formatRunTime(bestTimeMs)}.`
       : "";
-    const text = `Score: ${finalScorePercent}% (${correctCount}/${questions.length}). Time (mm:ss): ${formatRunTime(completionMs)}.${bestLabel}`;
+    const text = `Score: ${finalScorePercent}% (${correctCount}/${questions.length}). Time: ${formatRunTime(completionMs)}.${bestLabel}`;
 
     const buildShareImage = async (): Promise<Blob> => {
       // Render a complete, deterministic results image that mirrors the UI.
@@ -385,7 +385,7 @@ export function QuizQuestions({
       const values = [
         { label: "SCORE", value: `${correctCount}/${questions.length}` },
         { label: "PERFECT SCORES", value: String(perfectCount) },
-        { label: "TIME (mm:ss)", value: formatRunTime(completionMs) },
+        { label: "TIME", value: formatRunTime(completionMs) },
       ];
 
       for (let i = 0; i < values.length; i++) {
@@ -396,10 +396,10 @@ export function QuizQuestions({
         ctx.fillText(values[i].value, cx, valueY);
 
         // Add best time under TIME without changing the 3-column layout.
-        if (values[i].label === "TIME (mm:ss)" && bestTimeMs && Number.isFinite(bestTimeMs) && bestTimeMs > 0) {
+        if (values[i].label === "TIME" && bestTimeMs && Number.isFinite(bestTimeMs) && bestTimeMs > 0) {
           ctx.fillStyle = "#64748B";
           ctx.font = safeFont(800, 14);
-          ctx.fillText(`BEST (mm:ss) ${formatRunTime(bestTimeMs)}`, cx, valueY + 34);
+          ctx.fillText(`BEST ${formatRunTime(bestTimeMs)}`, cx, valueY + 34);
         }
       }
 
@@ -534,11 +534,10 @@ export function QuizQuestions({
                       let classes =
                         "w-full rounded-xl border px-4 py-3 text-left font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2";
 
-                      // Default state (unanswered): yellow tint so users can
-                      // easily distinguish unanswered vs answered.
+                      // Default state (unanswered).
                       if (!isAnswered) {
                         classes +=
-                          " bg-amber-50 border-amber-200 text-amber-950 hover:bg-amber-100 hover:border-amber-300 cursor-pointer";
+                          " bg-teal-50 border-teal-100 text-teal-900 hover:bg-teal-100 hover:border-teal-200 cursor-pointer";
                       } else if (!isRevealed) {
                         // Answered but in "weight" delay. Keep it readable and not obviously blocked.
                         classes +=
@@ -784,13 +783,13 @@ export function QuizQuestions({
               </div>
               <div>
                 <div className="text-xs font-semibold tracking-wide text-slate-500">
-                  TIME (mm:ss)
+                  TIME
                 </div>
                 <div className="mt-1 text-xl font-extrabold text-slate-900">
                   {formatRunTime(completionMs)}
                 </div>
                 <div className="mt-1 text-xs font-semibold text-slate-500">
-                  Best (mm:ss) {formatRunTime(bestTimeMs)}
+                  Best {formatRunTime(bestTimeMs)}
                 </div>
               </div>
             </div>

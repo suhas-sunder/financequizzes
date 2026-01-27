@@ -86,12 +86,12 @@ export const FINANCE_FAQS: FAQItem[] = [
     a: 'Each set is 10 questions. Your score is the number you answer correctly out of 10.',
   },
   {
-    q: 'What do “Perfect scores” and “Best time” track?',
-    a: 'Perfect scores counts how many times you finish a 10-question set with a 10/10 on this device. Best time is the fastest completion time for a finished set on this device.',
+    q: 'What do “New streak” and “Best streak” mean?',
+    a: 'New streak is your current consecutive correct answers within the active 10-question set. It resets on a wrong answer and when you start a new set. Best streak is the highest streak you’ve hit on this quiz on this device.',
   },
   {
-    q: 'What kind of questions are included?',
-    a: 'The pool focuses on broad finance vocabulary and common concepts across everyday money, banking, credit, saving, investing, and planning.',
+    q: 'Can I change an answer after choosing?',
+    a: 'No. Each question locks once you select an option, then the quiz reveals whether it was correct.',
   },
   {
     q: 'Does a new set repeat questions?',
