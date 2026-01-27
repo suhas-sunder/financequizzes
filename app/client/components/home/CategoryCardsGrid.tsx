@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router";
 import type { CategoryRoute } from "./homeRoutes";
 
 type CategoryCardsGridProps = {
@@ -17,9 +17,16 @@ export function CategoryCardsGrid({ routes, variant }: CategoryCardsGridProps) {
   return (
     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
       {routes.map((c) => (
-        <a key={c.t} href={c.href} className={cardClass}>
+        <Link
+          key={c.href}
+          to={c.href}
+          prefetch="intent"
+          className={`${cardClass} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2`}
+        >
           <div className="flex items-center gap-3 mb-3">
-            <span className="text-3xl">{c.icon}</span>
+            <span className="text-3xl" aria-hidden="true">
+              {c.icon}
+            </span>
             <h3 className="text-lg font-semibold text-[#0B1B2B] group-hover:text-teal-700 transition-colors">
               {c.t}
             </h3>
@@ -28,7 +35,7 @@ export function CategoryCardsGrid({ routes, variant }: CategoryCardsGridProps) {
           <div className="text-teal-700 mt-4 text-sm font-semibold group-hover:underline">
             {linkLabel}
           </div>
-        </a>
+        </Link>
       ))}
     </div>
   );

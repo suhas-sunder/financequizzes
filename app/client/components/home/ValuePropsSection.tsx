@@ -1,4 +1,5 @@
-import React from "react";
+import { Link } from "react-router";
+
 
 type ValuePropsSectionProps = {
   financeChallengeHref: string;
@@ -49,18 +50,19 @@ export function ValuePropsSection({
             </li>
           </ul>
           <div className="mt-6 flex flex-col sm:flex-row gap-3">
-            <a
-              href={financeChallengeHref}
-              className="rounded-xl bg-teal-700 px-5 py-2.5 text-white font-semibold text-base hover:bg-teal-800 transition text-center"
+            <Link
+              to={financeChallengeHref}
+              prefetch="intent"
+              className="rounded-xl bg-teal-700 px-5 py-2.5 text-white font-semibold text-base hover:bg-teal-800 transition text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
             >
               Take a 10-Question Challenge
-            </a>
-            <a
-              href={allCategoriesAnchorHref}
-              className="rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-[#0B1B2B] font-semibold text-base hover:bg-slate-50 transition text-center"
+            </Link>
+            <Link
+              to={allCategoriesAnchorHref}
+              className="rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-[#0B1B2B] font-semibold text-base hover:bg-slate-50 transition text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
             >
               Browse all categories
-            </a>
+            </Link>
           </div>
         </div>
       </div>

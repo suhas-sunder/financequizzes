@@ -1,5 +1,4 @@
 import React from "react";
-import { JsonLd } from "./JsonLd";
 
 export type FaqItem = { q: string; a: string };
 
@@ -19,37 +18,30 @@ export function FaqSection({ faqs }: FaqSectionProps) {
 
       <div className="rounded-2xl border border-slate-200 bg-white shadow-sm divide-y divide-slate-200">
         {faqs.map((f, i) => (
-          <div key={i} className="p-6">
-            <p className="font-semibold text-lg text-[#0B1B2B] mb-2">{f.q}</p>
-            <p className="text-slate-700">{f.a}</p>
-          </div>
+          <details key={`${i}-${f.q}`} className="group">
+            <summary className="cursor-pointer list-none p-6 outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2">
+              <div className="flex items-start justify-between gap-4">
+                <span
+                  className="font-semibold text-lg text-[#0B1B2B]"
+                  role="heading"
+                  aria-level={3}
+                >
+                  {f.q}
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full border border-slate-200 text-slate-600 group-open:rotate-45 transition"
+                >
+                  +
+                </span>
+              </div>
+            </summary>
+            <div className="px-6 pb-6 pt-0">
+              <p className="text-slate-700">{f.a}</p>
+            </div>
+          </details>
         ))}
       </div>
-
-      {/* Structured data: WebSite + FAQPage */}
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          name: "FinanceQuizzes",
-          url: "https://www.financequizzes.com/",
-        }}
-      />
-
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: faqs.map((f) => ({
-            "@type": "Question",
-            name: f.q,
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: f.a,
-            },
-          })),
-        }}
-      />
     </section>
   );
 }

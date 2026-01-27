@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 type HeroSectionProps = {
   financeChallengeHref: string;
   personalFinanceChallengeHref: string;
@@ -40,42 +42,54 @@ export function HeroSection({
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-            <a
-              href={financeChallengeHref}
-              className="rounded-xl bg-teal-700 px-6 py-3 text-white font-semibold text-base hover:bg-teal-800 transition"
+            <Link
+              to={financeChallengeHref}
+              prefetch="intent"
+              className="rounded-xl bg-teal-700 px-6 py-3 text-white font-semibold text-base hover:bg-teal-800 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
             >
               Take the 10-Question Finance Quiz
-            </a>
-            <a
-              href={personalFinanceChallengeHref}
-              className="rounded-xl border border-slate-300 bg-white px-6 py-3 text-[#0B1B2B] font-semibold text-base hover:bg-slate-50 transition"
+            </Link>
+            <Link
+              to={personalFinanceChallengeHref}
+              prefetch="intent"
+              className="rounded-xl border border-slate-300 bg-white px-6 py-3 text-[#0B1B2B] font-semibold text-base hover:bg-slate-50 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
             >
               Personal Finance Challenge
-            </a>
-            <a
-              href={investingChallengeHref}
-              className="rounded-xl border border-slate-300 bg-white px-6 py-3 text-[#0B1B2B] font-semibold text-base hover:bg-slate-50 transition"
+            </Link>
+            <Link
+              to={investingChallengeHref}
+              prefetch="intent"
+              className="rounded-xl border border-slate-300 bg-white px-6 py-3 text-[#0B1B2B] font-semibold text-base hover:bg-slate-50 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
             >
               Investing Challenge
-            </a>
+            </Link>
           </div>
 
           <p className="mt-5 text-sm text-slate-600">
             Or play a 3-question streak:&nbsp;
-            <a href={financeStreakHref} className="underline hover:no-underline">
+            <Link
+              to={financeStreakHref}
+              prefetch="intent"
+              className="underline hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
+            >
               Finance
-            </a>
+            </Link>
             ,&nbsp;
-            <a
-              href={personalFinanceStreakHref}
-              className="underline hover:no-underline"
+            <Link
+              to={personalFinanceStreakHref}
+              prefetch="intent"
+              className="underline hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
             >
               Personal Finance
-            </a>
+            </Link>
             ,&nbsp;
-            <a href={investingStreakHref} className="underline hover:no-underline">
+            <Link
+              to={investingStreakHref}
+              prefetch="intent"
+              className="underline hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
+            >
               Investing
-            </a>
+            </Link>
             .
           </p>
         </div>
