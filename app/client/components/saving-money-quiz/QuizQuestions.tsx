@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import type { QuizQuestion } from "./savingMoneyQuizData";
+import type { QuizQuestion } from "./businessFinanceQuizData";
 
 type AnswerResult = "correct" | "incorrect";
 
@@ -69,6 +69,12 @@ export function QuizQuestions({
   const hasAnimatedRef = useRef(false);
   const resultsRef = useRef<HTMLDivElement | null>(null);
 
+  const perfectCountKey = typeof window !== "undefined"
+    ? `financequizzes:${window.location.pathname}:perfectCount`
+    : "";
+  const [storedPerfectCount, setStoredPerfectCount] = useState<number>(0);
+  const wasCompleteRef = useRef(showEnd);
+
   // Controls when the end screen content should animate in.
   // We keep the results card mounted (with placeholders) to avoid layout shift,
   // then (1) gently scroll only if needed, (2) reveal the end state.
@@ -87,6 +93,34 @@ export function QuizQuestions({
     if (pct <= 87) return "text-emerald-400";
     return "text-emerald-700";
   }
+
+  useEffect(() => {
+    if (!perfectCountKey) return;
+    try {
+      const raw = window.localStorage.getItem(perfectCountKey);
+      const parsed = raw ? Number.parseInt(raw, 10) : NaN;
+      setStoredPerfectCount(Number.isFinite(parsed) && parsed >= 0 ? parsed : 0);
+    } catch {
+      setStoredPerfectCount(0);
+    }
+    wasCompleteRef.current = showEnd;
+  }, [perfectCountKey]);
+
+  useEffect(() => {
+    if (!perfectCountKey) return;
+    if (showEnd && !wasCompleteRef.current && correctCount === 10 && questions.length === 10) {
+      try {
+        const raw = window.localStorage.getItem(perfectCountKey);
+        const parsed = raw ? Number.parseInt(raw, 10) : NaN;
+        const current = Number.isFinite(parsed) && parsed >= 0 ? parsed : 0;
+        const next = current + 1;
+        window.localStorage.setItem(perfectCountKey, String(next));
+        setStoredPerfectCount(next);
+      } catch {
+      }
+    }
+    wasCompleteRef.current = showEnd;
+  }, [perfectCountKey, showEnd, correctCount, questions.length]);
 
   useEffect(() => {
     if (!showEnd) {
@@ -384,7 +418,7 @@ export function QuizQuestions({
 
       const values = [
         { label: "SCORE", value: `${correctCount}/${questions.length}` },
-        { label: "PERFECT SCORES", value: String(perfectCount) },
+        { label: "PERFECT SCORES", value: String(storedPerfectCount) },
         { label: "TIME (mm:ss)", value: formatRunTime(completionMs) },
       ];
 
@@ -779,7 +813,7 @@ export function QuizQuestions({
                   PERFECT SCORES
                 </div>
                 <div className="mt-1 text-xl font-extrabold text-slate-900">
-                  {perfectCount}
+                  {storedPerfectCount}
                 </div>
               </div>
               <div>

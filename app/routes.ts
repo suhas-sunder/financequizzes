@@ -15,7 +15,6 @@ export default [
   route("business-finance-quiz", "routes/business-finance-quiz.tsx"),
   route("insurance-basics-quiz", "routes/insurance-basics-quiz.tsx"),
   route("finance-quiz-questions", "routes/finance-quiz-questions.tsx"),
-
   route("privacy-policy", "routes/privacy-policy.tsx"),
   route("terms-of-service", "routes/terms-of-service.tsx"),
   route("cookies-policy", "routes/cookies-policy.tsx"),

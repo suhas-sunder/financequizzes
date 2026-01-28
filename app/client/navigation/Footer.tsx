@@ -50,13 +50,12 @@ export default function Footer() {
             >
               Cookies
             </NavLink>
-            <span className="hidden sm:inline text-slate-500">·</span>
-            <a
-              href="mailto:support@financequizzes.com"
+            <NavLink
+              to="/contact"
               className="text-slate-300 hover:text-teal-300 transition-colors"
             >
               Contact
-            </a>
+            </NavLink>
           </div>
         </div>
       </div>

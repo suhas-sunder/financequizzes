@@ -30,25 +30,21 @@ export function loader() {
 
 export default function Contact({}: Route.ComponentProps) {
   return (
-    <main className="bg-white text-[#0B1B2B]">
+    <main className="bg-white text-[#0B1B2B]  min-h-screen">
       <section className="mx-auto max-w-[900px] px-4 py-12">
         <header className="mb-8">
-          <h1 className="text-3xl font-semibold tracking-tight">
-            Contact
-          </h1>
+          <h1 className="text-3xl font-semibold tracking-tight">Contact</h1>
           <p className="mt-2 text-slate-600">
             Get in touch with questions, feedback, or content corrections.
           </p>
         </header>
 
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="text-lg font-semibold">
-            Email
-          </h2>
+          <h2 className="text-lg font-semibold">Email</h2>
 
           <p className="mt-3 text-slate-700">
-            For feedback, bug reports, or corrections to quiz questions, email us
-            directly:
+            For feedback, bug reports, or corrections to quiz questions, email
+            us directly:
           </p>
 
           <div className="mt-5">
@@ -74,9 +70,7 @@ export default function Contact({}: Route.ComponentProps) {
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="text-lg font-semibold">
-              Educational purpose
-            </h2>
+            <h2 className="text-lg font-semibold">Educational purpose</h2>
             <p className="mt-2 text-slate-700">
               FinanceQuizzes is an educational site. Content is for general
               knowledge only and does not constitute financial, tax, or
@@ -85,39 +79,13 @@ export default function Contact({}: Route.ComponentProps) {
           </div>
 
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="text-lg font-semibold">
-              Response time
-            </h2>
+            <h2 className="text-lg font-semibold">Response time</h2>
             <p className="mt-2 text-slate-700">
               We typically respond within 1–3 business days. Some messages may
               take longer during busy periods.
             </p>
           </div>
         </div>
-
-        <footer className="mt-10 flex flex-wrap gap-3 text-sm text-slate-600">
-          <span>Quick links:</span>
-          <NavLink
-            to="/"
-            className="underline cursor-pointer hover:text-teal-600 transition-colors"
-          >
-            Home
-          </NavLink>
-          <span className="opacity-50">•</span>
-          <NavLink
-            to="/privacy"
-            className="underline cursor-pointer hover:text-teal-600 transition-colors"
-          >
-            Privacy Policy
-          </NavLink>
-          <span className="opacity-50">•</span>
-          <NavLink
-            to="/terms"
-            className="underline cursor-pointer hover:text-teal-600 transition-colors"
-          >
-            Terms
-          </NavLink>
-        </footer>
       </section>
     </main>
   );
