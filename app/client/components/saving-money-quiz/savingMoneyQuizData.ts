@@ -57,12 +57,14 @@ export const SAVING_MONEY_QUIZ_SCORE_BANDS = [
   {
     key: "4-5",
     label: "4–5 out of 10",
-    meaning: "Some baseline familiarity, but inconsistent interpretation of key phrases.",
+    meaning:
+      "Some baseline familiarity, but inconsistent interpretation of key phrases.",
   },
   {
     key: "6-7",
     label: "6–7 out of 10",
-    meaning: "Solid understanding of most saving concepts and behavioral framing.",
+    meaning:
+      "Solid understanding of most saving concepts and behavioral framing.",
   },
   {
     key: "8-9",
@@ -349,5 +351,155 @@ export const SAVING_MONEY_QUIZ_QUESTION_BANK: QuizQuestion[] = [
       "A monthly fee waiver",
     ],
     correct: "Extra cash set aside to reduce risk from surprises",
+  },
+  {
+    q: "If a saving approach is described as “sustainable,” it most likely means:",
+    options: [
+      "It can be maintained over time without burnout",
+      "It depends on a one-time windfall to work",
+      "It requires perfect discipline every day forever",
+      "It only works if income rises each month",
+    ],
+    correct: "It can be maintained over time without burnout",
+  },
+  {
+    q: "In saving language, what does “cash flow aware” most directly imply?",
+    options: [
+      "Noticing timing of inflows and outflows across the month",
+      "Keeping all savings in physical cash at home",
+      "Only tracking spending after the month ends",
+      "Choosing the best interest rate before saving",
+    ],
+    correct: "Noticing timing of inflows and outflows across the month",
+  },
+  {
+    q: "What does “leakage” usually mean in a saving context?",
+    options: [
+      "Small untracked spending that erodes planned saving",
+      "A bank error that removes money permanently",
+      "A category transfer that increases saving automatically",
+      "A one-time bill that cannot be anticipated",
+    ],
+    correct: "Small untracked spending that erodes planned saving",
+  },
+  {
+    q: "When someone says “build a margin,” they usually mean:",
+    options: [
+      "Create extra room so small mistakes do not break plans",
+      "Maximize spending now to avoid future restrictions",
+      "Avoid all categories so tracking is unnecessary",
+      "Rely on exact predictions to prevent surprises",
+    ],
+    correct: "Create extra room so small mistakes do not break plans",
+  },
+  {
+    q: "In saving discussions, what does “baseline spending” most closely mean?",
+    options: [
+      "The typical spending level before any deliberate changes",
+      "Spending that happens only during emergencies",
+      "Spending that must increase every month automatically",
+      "Spending that is entirely optional and always avoidable",
+    ],
+    correct: "The typical spending level before any deliberate changes",
+  },
+  {
+    q: "What does “tradeoff between flexibility and commitment” most directly describe?",
+    options: [
+      "More commitment can reduce choices later, even if helpful",
+      "Flexibility always improves outcomes without any downside",
+      "Commitment removes uncertainty so flexibility is unnecessary",
+      "Flexibility and commitment are identical in saving behavior",
+    ],
+    correct: "More commitment can reduce choices later, even if helpful",
+  },
+  {
+    q: "If someone says “saving is a behavior, not an event,” they mean:",
+    options: [
+      "Saving is repeated over time, not a single moment",
+      "Saving only happens after a single big purchase",
+      "Saving depends on perfect timing of expenses each week",
+      "Saving is impossible without predicting future income",
+    ],
+    correct: "Saving is repeated over time, not a single moment",
+  },
+  {
+    q: "What does “short-term sacrifice for long-term benefit” most closely imply?",
+    options: [
+      "Choosing less now to support a later goal",
+      "Borrowing now so saving can happen later",
+      "Spending now because future needs are unpredictable",
+      "Avoiding goals to keep spending flexible and simple",
+    ],
+    correct: "Choosing less now to support a later goal",
+  },
+  {
+    q: "In saving language, what does “competing goals” usually imply?",
+    options: [
+      "Two goals draw on the same limited resources or time",
+      "Two goals always support each other without conflict",
+      "Goals only conflict when income is falling each month",
+      "Goals cannot be compared without interest rate knowledge",
+    ],
+    correct: "Two goals draw on the same limited resources or time",
+  },
+  {
+    q: "What does “goal drift” most directly describe in saving conversations?",
+    options: [
+      "A goal gradually changing without a deliberate decision",
+      "A goal being completed earlier than expected on purpose",
+      "A goal being tracked more carefully and consistently",
+      "A goal being split into smaller milestones intentionally",
+    ],
+    correct: "A goal gradually changing without a deliberate decision",
+  },
+  {
+    q: "If a saving plan is described as “time-oriented,” it most likely emphasizes:",
+    options: [
+      "How soon money is needed and how long to build",
+      "Which specific products should be used for saving",
+      "How to maximize returns through optimized allocations",
+      "Which providers offer the lowest fees and rates",
+    ],
+    correct: "How soon money is needed and how long to build",
+  },
+  {
+    q: "What does “contingency” most directly mean in saving and buffer language?",
+    options: [
+      "A backup plan if life does not go as expected",
+      "A strict rule that prevents any plan changes later",
+      "A guarantee that emergencies will never happen again",
+      "A way to eliminate all spending categories permanently",
+    ],
+    correct: "A backup plan if life does not go as expected",
+  },
+  {
+    q: "In saving discussions, what does “threshold” most closely mean?",
+    options: [
+      "A point where behavior or choices change meaningfully",
+      "A bank product feature that increases savings automatically",
+      "A fixed interest rate that must be achieved to save",
+      "A tax rule that applies to all savings in every case",
+    ],
+    correct: "A point where behavior or choices change meaningfully",
+  },
+  {
+    q: "What does “review cadence” most commonly refer to in saving conversations?",
+    options: [
+      "How often goals and assumptions are revisited and updated",
+      "How often interest is calculated on a savings balance",
+      "How often a bank charges fees on an account type",
+      "How often a credit report is refreshed by a bureau",
+    ],
+    correct: "How often goals and assumptions are revisited and updated",
+  },
+  {
+    q: "If someone says “saving reduces fragility,” they most likely mean:",
+    options: [
+      "Having reserves makes small shocks less likely to cascade",
+      "Having reserves guarantees you will never face surprises",
+      "Having reserves eliminates the need to earn income again",
+      "Having reserves means spending can be unlimited each month",
+    ],
+    correct: "Having reserves makes small shocks less likely to cascade",
   },
 ] as const;

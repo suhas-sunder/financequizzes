@@ -18,7 +18,7 @@ export function SeoContentSection() {
 
           <details className="rounded-2xl border border-slate-200 bg-[#F9FBFD] p-5 sm:p-6">
             <summary className="cursor-pointer list-none font-semibold text-[#0B1B2B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2 hover:opacity-90 transition">
-              Read the full guide and topic picks
+              Read the full guide & topic picks ▾
             </summary>
 
             <div className="mt-4 space-y-5">
