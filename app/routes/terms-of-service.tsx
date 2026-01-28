@@ -1,144 +1,149 @@
-import { json } from "@remix-run/node";
+/* eslint-disable react/no-unescaped-entities */
+import { Link } from "react-router";
 import type { Route } from "./+types/terms-of-service";
+export const meta: Route.MetaFunction = () => {
+  const canonical = "FinanceQuizzes/terms-of-service";
 
-export function meta({}: Route.MetaArgs) {
-  const title = "Terms of Service | FinanceQuizzes.com";
+  const title = "Terms of Service | FinanceQuizzes";
   const description =
-    "Read the terms and conditions for using FinanceQuizzes.com. By accessing our site, you agree to these terms.";
-  const url = "https://www.financequizzes.com/terms-of-service";
+    "Read the FinanceQuizzes Terms of Service. Learn about your rights and responsibilities when using the website.";
+
+  const ogImage = "FinanceQuizzes/og/ilovesvg-terms.jpg";
+
   return [
     { title },
     { name: "description", content: description },
+
+    { tagName: "link", rel: "canonical", href: canonical },
+
+    { property: "og:site_name", content: "FinanceQuizzes" },
     { property: "og:title", content: title },
     { property: "og:description", content: description },
-    { property: "og:url", content: url },
-    { name: "theme-color", content: "#0B1B2B" },
-  ];
-}
+    { property: "og:type", content: "website" },
+    { property: "og:url", content: canonical },
+    { property: "og:image", content: ogImage },
+    { property: "og:image:alt", content: "FinanceQuizzes terms of service" },
+    { property: "og:locale", content: "en_US" },
 
-export function loader() {
-  return json({});
-}
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:title", content: title },
+    { name: "twitter:description", content: description },
+    { name: "twitter:image", content: ogImage },
+
+    { name: "robots", content: "noindex,follow" },
+  ];
+};
 
 export default function TermsOfService() {
   return (
-    <main className="bg-white text-[#0B1B2B]">
-      {/* === Breadcrumb navigation (visible) === */}
-      <nav
-        className="text-sm text-slate-600 px-6 pb-4 pt-3 max-w-6xl mx-auto"
-        aria-label="Breadcrumb"
-      >
-        <ol className="list-none p-0 inline-flex space-x-2">
-          <li>
-            <a href="/" className="text-teal-700 hover:underline font-medium">
-              Home
-            </a>
-          </li>
-          <li className="text-slate-400">›</li>
-          <li aria-current="page" className="text-slate-700 font-semibold">
-            Terms of Service
-          </li>
-        </ol>
-      </nav>
-      <section className="max-w-4xl mx-auto px-6 pb-16">
-        <h1 className="text-4xl font-extrabold mb-8 text-center">
-          Terms of Service
-        </h1>
+    <div className="my-8 flex flex-col mx-10 items-center justify-center gap-8 font-nunito text-skull-brown">
+      <header className="flex max-w-[1200px] flex-col gap-5 w-full">
+        <nav aria-label="Breadcrumb" className="text-sm font-lato">
+          <ol className="flex flex-wrap items-center gap-2">
+            <li>
+              <Link to="/" className="hover:underline">
+                Home
+              </Link>
+            </li>
+            <li className="opacity-70">&gt;</li>
+            <li>
+              <Link to="/misc" className="hover:underline">
+                Misc
+              </Link>
+            </li>
+            <li className="opacity-70">&gt;</li>
+            <li aria-current="page" className="opacity-90">
+              Terms of Service
+            </li>
+          </ol>
+        </nav>
 
-        <p className="text-slate-700 mb-6">
-          Last updated: {new Date().toLocaleDateString("en-US")}
+        <h1 className="mb-5 flex py-2 text-4xl">TERMS OF SERVICE</h1>
+        <h3 className="flex py-2 text-2xl">Last updated January 10, 2026</h3>
+
+        <h2>AGREEMENT TO OUR LEGAL TERMS</h2>
+
+        <p className="flex flex-col gap-4 py-2">
+          We are FinanceQuizzes (FinanceQuizzes) ("Company", "we", "us",
+          "our").
         </p>
 
-        <div className="space-y-6 leading-relaxed text-slate-700">
-          <p>
-            Welcome to <strong>FinanceQuizzes.com</strong>. By using this
-            website, you agree to comply with and be bound by the following
-            terms and conditions. Please read them carefully.
-          </p>
+        <p>
+          We operate the website FinanceQuizzes (the "Site"), as well
+          as any other related products and services that refer or link to these
+          legal terms (the "Legal Terms") (collectively, the "Services").
+        </p>
 
-          <h2 className="text-2xl font-semibold text-[#0B1B2B] mt-8">
-            1. Use of Website
-          </h2>
-          <p>
-            You may use our quizzes and educational materials for personal,
-            non-commercial purposes only. You agree not to copy, reproduce, or
-            redistribute any content without prior written permission.
-          </p>
+        <p>
+          You can contact us by email at support@financequizzes.com or by mail to
+          FinanceQuizzes, Toronto, Ontario, Canada.
+        </p>
 
-          <h2 className="text-2xl font-semibold text-[#0B1B2B] mt-8">
-            2. Accuracy of Information
-          </h2>
-          <p>
-            While we strive to ensure accuracy, FinanceQuizzes.com makes no
-            warranties or representations about the completeness or reliability
-            of any quiz content.
-          </p>
+        <p>
+          These Legal Terms constitute a legally binding agreement made between
+          you, whether personally or on behalf of an entity ("you"), and FinanceQuizzes,
+          concerning your access to and use of the Services. You agree that by
+          accessing the Services, you have read, understood, and agreed to be
+          bound by all of these Legal Terms. IF YOU DO NOT AGREE WITH ALL OF
+          THESE LEGAL TERMS, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE
+          SERVICES AND YOU MUST DISCONTINUE USE IMMEDIATELY.
+        </p>
 
-          <h2 className="text-2xl font-semibold text-[#0B1B2B] mt-8">
-            3. Disclaimer of Liability
-          </h2>
-          <p>
-            We are not responsible for any losses or damages arising from use of
-            the website or its information. Use at your own risk.
-          </p>
+        <p>
+          Supplemental terms and conditions or documents that may be posted on
+          the Services from time to time are hereby expressly incorporated
+          herein by reference. We reserve the right, in our sole discretion, to
+          make changes or modifications to these Legal Terms from time to time.
+          We will alert you about any changes by updating the "Last updated"
+          date of these Legal Terms, and you waive any right to receive specific
+          notice of each such change. It is your responsibility to periodically
+          review these Legal Terms to stay informed of updates. You will be
+          subject to, and will be deemed to have been made aware of and to have
+          accepted, the changes in any revised Legal Terms by your continued use
+          of the Services after the date such revised Legal Terms are posted.
+        </p>
 
-          <h2 className="text-2xl font-semibold text-[#0B1B2B] mt-8">
-            4. Intellectual Property
-          </h2>
-          <p>
-            All quizzes, questions, logos, and graphics are the intellectual
-            property of FinanceQuizzes.com and may not be reused without
-            permission.
-          </p>
+        <p>
+          The Services are intended for a general audience. If you are under the
+          age of 13, you may not use the Services. If you are under the age of
+          majority in your jurisdiction, you may use the Services only with the
+          involvement and consent of a parent or legal guardian.
+        </p>
+      </header>
 
-          <h2 className="text-2xl font-semibold text-[#0B1B2B] mt-8">
-            5. Changes to Terms
-          </h2>
+      <main className="flex max-w-[1200px] flex-col gap-8">
+        <section className="flex flex-col gap-4">
+          <h2 className="flex py-2 text-2xl">1. OUR SERVICES</h2>
           <p>
-            We reserve the right to modify these terms at any time. Updates will
-            be reflected on this page with a revised “Last updated” date.
+            The Services provide free finance and economics quizzes, question sets, and educational explanations. The information provided when using the Services is not intended as financial, investment, tax, or legal advice. The information provided when using the Services is
+            not intended for distribution to or use by any person or entity in
+            any jurisdiction or country where such distribution or use would be
+            contrary to law or regulation or which would subject us to any
+            registration requirement within such jurisdiction or country.
           </p>
+        </section>
 
-          <h2 className="text-2xl font-semibold text-[#0B1B2B] mt-8">
-            6. Contact
-          </h2>
+        <section className="flex flex-col gap-4">
+          <h2 className="flex py-2 text-2xl">16. PRIVACY POLICY</h2>
           <p>
-            For questions about these Terms, please contact{" "}
-            <a
-              href="mailto:support@financequizzes.com"
-              className="text-teal-700 underline hover:text-teal-800"
-            >
-              support@financequizzes.com
-            </a>
-            .
+            We care about data privacy and security. Please review our Privacy
+            Policy: FinanceQuizzes/privacy. By using the Services, you
+            agree to be bound by our Privacy Policy, which is incorporated into
+            these Legal Terms.
           </p>
-        </div>
-      </section>
+        </section>
 
-      {/* === BreadcrumbList (for structured data) === */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              {
-                "@type": "ListItem",
-                position: 1,
-                name: "Home",
-                item: "https://www.financequizzes.com/",
-              },
-              {
-                "@type": "ListItem",
-                position: 2,
-                name: "Terms of Service",
-                item: "https://www.financequizzes.com/terms-of-service",
-              },
-            ],
-          }),
-        }}
-      />
-    </main>
+        <section className="flex flex-col gap-4">
+          <h2 className="flex py-2 text-2xl">30. CONTACT US</h2>
+          <p>
+            In order to resolve a complaint regarding the Services or to receive further information regarding use of the Services, please contact us at:
+          </p>
+          <p>FinanceQuizzes</p>
+          <p>Toronto, Ontario</p>
+          <p>Canada</p>
+          <p>support@financequizzes.com</p>
+        </section>
+      </main>
+    </div>
   );
 }

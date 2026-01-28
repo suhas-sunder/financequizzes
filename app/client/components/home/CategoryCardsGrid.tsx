@@ -9,8 +9,8 @@ type CategoryCardsGridProps = {
 export function CategoryCardsGrid({ routes, variant }: CategoryCardsGridProps) {
   const cardClass =
     variant === "priority"
-      ? "group flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-7 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition"
-      : "group flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition";
+      ? "group flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-7 shadow-sm cursor-pointer hover:shadow-md hover:-translate-y-0.5 transition"
+      : "group flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-6 shadow-sm cursor-pointer hover:shadow-md hover:-translate-y-0.5 transition";
 
   const linkLabel = variant === "priority" ? "Start →" : "Open →";
 

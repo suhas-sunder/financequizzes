@@ -44,6 +44,13 @@ export default function Footer() {
               Terms of Service
             </NavLink>
             <span className="hidden sm:inline text-slate-500">·</span>
+            <NavLink
+              to="/cookies-policy"
+              className="text-slate-300 hover:text-teal-300 transition-colors"
+            >
+              Cookies
+            </NavLink>
+            <span className="hidden sm:inline text-slate-500">·</span>
             <a
               href="mailto:support@financequizzes.com"
               className="text-slate-300 hover:text-teal-300 transition-colors"

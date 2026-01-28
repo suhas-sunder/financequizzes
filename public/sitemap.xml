@@ -1,65 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
   <!-- Home -->
   <url>
     <loc>https://www.financequizzes.com/</loc>
-    <lastmod>2025-11-04T00:00:00Z</lastmod>
-    <priority>1.00</priority>
+    <lastmod>2026-01-27T00:00:00Z</lastmod>
   </url>
 
-  <!-- Main Quiz Pages -->
+  <!-- Quiz Pages -->
   <url>
-    <loc>https://www.financequizzes.com/learn-banking-quizzes</loc>
-    <lastmod>2025-11-04T00:00:00Z</lastmod>
-    <priority>0.90</priority>
+    <loc>https://www.financequizzes.com/finance-quiz</loc>
+    <lastmod>2026-01-27T00:00:00Z</lastmod>
   </url>
 
   <url>
-    <loc>https://www.financequizzes.com/learn-business-quizzes</loc>
-    <lastmod>2025-11-04T00:00:00Z</lastmod>
-    <priority>0.90</priority>
+    <loc>https://www.financequizzes.com/investing-quiz</loc>
+    <lastmod>2026-01-27T00:00:00Z</lastmod>
   </url>
 
   <url>
-    <loc>https://www.financequizzes.com/learn-economics-quizzes</loc>
-    <lastmod>2025-11-04T00:00:00Z</lastmod>
-    <priority>0.90</priority>
+    <loc>https://www.financequizzes.com/budgeting-quiz</loc>
+    <lastmod>2026-01-27T00:00:00Z</lastmod>
   </url>
 
   <url>
-    <loc>https://www.financequizzes.com/learn-history-quizzes</loc>
-    <lastmod>2025-11-04T00:00:00Z</lastmod>
-    <priority>0.85</priority>
+    <loc>https://www.financequizzes.com/saving-money-quiz</loc>
+    <lastmod>2026-01-27T00:00:00Z</lastmod>
   </url>
 
   <url>
-    <loc>https://www.financequizzes.com/learn-insurance-quizzes</loc>
-    <lastmod>2025-11-04T00:00:00Z</lastmod>
-    <priority>0.85</priority>
+    <loc>https://www.financequizzes.com/financial-planning-quiz</loc>
+    <lastmod>2026-01-27T00:00:00Z</lastmod>
   </url>
 
   <url>
-    <loc>https://www.financequizzes.com/learn-investing-quizzes</loc>
-    <lastmod>2025-11-04T00:00:00Z</lastmod>
-    <priority>0.90</priority>
+    <loc>https://www.financequizzes.com/stock-market-basics-quiz</loc>
+    <lastmod>2026-01-27T00:00:00Z</lastmod>
   </url>
 
   <url>
-    <loc>https://www.financequizzes.com/learn-personal-finance-quizzes</loc>
-    <lastmod>2025-11-04T00:00:00Z</lastmod>
-    <priority>0.95</priority>
+    <loc>https://www.financequizzes.com/retirement-basics-quiz</loc>
+    <lastmod>2026-01-27T00:00:00Z</lastmod>
   </url>
 
-  <!-- Legal Pages -->
+  <url>
+    <loc>https://www.financequizzes.com/banking-and-credit-quiz</loc>
+    <lastmod>2026-01-27T00:00:00Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.financequizzes.com/economics-quiz</loc>
+    <lastmod>2026-01-27T00:00:00Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.financequizzes.com/business-finance-quiz</loc>
+    <lastmod>2026-01-27T00:00:00Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.financequizzes.com/insurance-basics-quiz</loc>
+    <lastmod>2026-01-27T00:00:00Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.financequizzes.com/finance-quiz-questions</loc>
+    <lastmod>2026-01-27T00:00:00Z</lastmod>
+  </url>
+
+  <!-- Legal / Utility -->
   <url>
     <loc>https://www.financequizzes.com/privacy-policy</loc>
-    <lastmod>2025-11-04T00:00:00Z</lastmod>
-    <priority>0.60</priority>
+    <lastmod>2026-01-27T00:00:00Z</lastmod>
   </url>
 
   <url>
     <loc>https://www.financequizzes.com/terms-of-service</loc>
-    <lastmod>2025-11-04T00:00:00Z</lastmod>
-    <priority>0.60</priority>
+    <lastmod>2026-01-27T00:00:00Z</lastmod>
   </url>
+
+  <url>
+    <loc>https://www.financequizzes.com/cookies-policy</loc>
+    <lastmod>2026-01-27T00:00:00Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://www.financequizzes.com/contact</loc>
+    <lastmod>2026-01-27T00:00:00Z</lastmod>
+  </url>
+
 </urlset>

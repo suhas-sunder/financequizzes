@@ -5,18 +5,13 @@ import { HeroSection } from "../client/components/home/HeroSection";
 import { PriorityPathsSection } from "../client/components/home/PriorityPathsSection";
 import { ValuePropsSection } from "../client/components/home/ValuePropsSection";
 import { QuizGuideSection } from "../client/components/home/QuizGuideSection";
+import { SeoContentSection } from "../client/components/home/SeoContentSection";
 import { AllCategoriesSection } from "../client/components/home/AllCategoriesSection";
 import { FaqSection } from "../client/components/home/FaqSection";
 import { JsonLd } from "../client/components/home/JsonLd";
 
-import {
-  allCategoryRoutes,
-  priorityRoutes,
-} from "../client/components/home/homeRoutes";
-import {
-  buildCanonicalUrl,
-  getPreferredSiteUrl,
-} from "../client/components/home/seo.server";
+import { allCategoryRoutes, priorityRoutes } from "../client/components/home/homeRoutes";
+import { buildCanonicalUrl, getPreferredSiteUrl } from "../client/components/home/seo.server";
 import { useLoaderData } from "react-router";
 
 interface LoaderData {
@@ -27,15 +22,12 @@ interface LoaderData {
   };
 }
 
-export function meta({
-  data,
-}: Route.MetaArgs & { data?: LoaderData | undefined }) {
-  const title = "Finance Quizzes | 10‑Question Challenges + 3‑Question Streaks";
+export function meta({ data }: Route.MetaArgs & { data?: LoaderData | undefined }) {
+  const title = "Finance Quizzes | Free 10 Question Challenge Quizzes";
   const description =
-    "Free finance quizzes to test your money knowledge. Take 10‑question challenge quizzes or play quick 3‑question streaks in personal finance and investing. No signup.";
+    "Free finance quizzes to test your money knowledge. Take 10 question challenge quizzes across budgeting, saving, investing, banking and credit, insurance, economics, and more. No signup.";
 
-  const canonicalUrl =
-    data?.seo?.canonicalUrl ?? "https://www.financequizzes.com/";
+  const canonicalUrl = data?.seo?.canonicalUrl ?? "https://www.financequizzes.com/";
   const siteUrl = data?.seo?.siteUrl ?? "https://www.financequizzes.com";
 
   return [
@@ -56,11 +48,9 @@ export function meta({
     { name: "robots", content: "index,follow" },
     { name: "theme-color", content: "#0B1B2B" },
 
-    // Helpful hint for crawlers and link preview tools
     { name: "application-name", content: "FinanceQuizzes" },
     { name: "generator", content: "Remix" },
 
-    // Defensive: declare base for absolute URL generation by some parsers
     { tagName: "meta", name: "og:site_name", content: "FinanceQuizzes" },
     { tagName: "meta", name: "twitter:domain", content: new URL(siteUrl).host },
   ];
@@ -81,16 +71,16 @@ export function loader({ request }: Route.LoaderArgs) {
         a: "No. There is no signup. Some stats may be saved locally in your browser.",
       },
       {
+        q: "How long is each quiz?",
+        a: "Each challenge quiz is 10 multiple choice questions. Most people finish in a few minutes.",
+      },
+      {
+        q: "Do the quizzes include answers?",
+        a: "Yes. You get immediate feedback after each question, plus a score summary at the end of the 10 question run.",
+      },
+      {
         q: "Is this financial advice?",
         a: "No. This site is educational only and does not provide financial, tax, or investment advice.",
-      },
-      {
-        q: "What is the difference between streaks and challenge quizzes?",
-        a: "Streak quizzes are 3 quick questions. Challenge quizzes are 10 questions and give a score summary at the end.",
-      },
-      {
-        q: "How long does a quiz take?",
-        a: "Most quizzes are short. A streak takes under a minute, and a 10‑question challenge usually takes a few minutes.",
       },
     ],
     seo: { canonicalUrl, siteUrl },
@@ -112,21 +102,19 @@ export default function Home({}: Route.ComponentProps) {
     <main className="bg-white text-[#0B1B2B]">
       <HeroSection
         financeChallengeHref="/finance-quiz"
-        personalFinanceChallengeHref="/personal-finance-quiz"
+        budgetingChallengeHref="/budgeting-quiz"
         investingChallengeHref="/investing-quiz"
-        financeStreakHref="/general-finance-quizzes"
-        personalFinanceStreakHref="/learn-personal-finance-quizzes"
-        investingStreakHref="/learn-investing-quizzes"
+        financeQuestionsHref="/finance-quiz-questions"
+        allCategoriesAnchorHref="#all-categories"
       />
 
       <PriorityPathsSection routes={priorityRoutes} />
 
-      <ValuePropsSection
-        financeChallengeHref="/finance-quiz"
-        allCategoriesAnchorHref="#all-categories"
-      />
+      <ValuePropsSection financeChallengeHref="/finance-quiz" allCategoriesAnchorHref="#all-categories" />
 
       <QuizGuideSection />
+
+      <SeoContentSection />
 
       <AllCategoriesSection routes={allCategoryRoutes} />
 
@@ -153,7 +141,7 @@ export default function Home({}: Route.ComponentProps) {
               "@type": "WebPage",
               "@id": webpageId,
               url: pageUrl,
-              name: "Finance & Investing Quizzes",
+              name: "Finance Quizzes",
               isPartOf: { "@id": websiteId },
               about: { "@id": appId },
             },
