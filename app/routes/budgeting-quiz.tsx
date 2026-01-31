@@ -25,20 +25,27 @@ interface LoaderData {
 }
 
 export function meta({ data }: Route.MetaArgs) {
-  const title = "Budgeting Quiz | FinanceQuizzes.com";
+  const title =
+    "Budgeting Quiz (10 Questions) | FinanceQuizzes.com";
+
   const description =
-    "A fast 10-question budgeting terminology quiz focused on budgeting concepts, categories, allocations, and planning vs tracking language.";
+    "Test your budgeting fundamentals in under 3 minutes. A free 10-question quiz covering budgeting concepts, categories, allocations, and planning vs tracking terms.";
+
   const url =
     data?.canonicalUrl ?? "https://www.financequizzes.com/budgeting-quiz";
 
+  const ogImage =
+    data?.ogImageUrl ?? "https://www.financequizzes.com/og/budgeting-quiz.png";
+
   return [
+    // Primary
     { title },
     { name: "description", content: description },
 
-    // Indexing discipline
+    // Indexing
     { name: "robots", content: "index,follow" },
 
-    // Canonical discipline
+    // Canonical
     { rel: "canonical", href: url },
 
     // Open Graph
@@ -46,16 +53,22 @@ export function meta({ data }: Route.MetaArgs) {
     { property: "og:description", content: description },
     { property: "og:type", content: "website" },
     { property: "og:url", content: url },
+    { property: "og:site_name", content: "FinanceQuizzes.com" },
+    { property: "og:image", content: ogImage },
+    { property: "og:image:alt", content: "Budgeting Quiz with 10 Questions" },
 
     // Twitter
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: title },
     { name: "twitter:description", content: description },
+    { name: "twitter:image", content: ogImage },
+    { name: "twitter:image:alt", content: "Budgeting Quiz with 10 Questions" },
 
     // Theme
     { name: "theme-color", content: "#0B1B2B" },
   ];
 }
+
 
 export function loader({ request }: Route.LoaderArgs) {
   const siteUrl = getSiteUrlFromEnv(process.env);

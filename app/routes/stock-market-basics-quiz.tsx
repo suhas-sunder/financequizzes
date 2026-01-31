@@ -25,21 +25,29 @@ interface LoaderData {
 }
 
 export function meta({ data }: Route.MetaArgs) {
-  const title = "Stock Market Basics Quiz | FinanceQuizzes.com";
+  const title =
+    "Stock Market Basics Quiz (10 Questions) | FinanceQuizzes.com";
+
   const description =
-    "A fast 10-question stock market basics quiz focused on market structure, stock terminology, exchanges, and definitional risk/return language. No live data.";
+    "Test your stock market fundamentals in under 3 minutes. A free 10-question quiz covering stocks, exchanges, market structure, and risk vs return concepts.";
+
   const url =
     data?.canonicalUrl ??
     "https://www.financequizzes.com/stock-market-basics-quiz";
 
+  const ogImage =
+    data?.ogImageUrl ??
+    "https://www.financequizzes.com/og/stock-market-basics-quiz.png";
+
   return [
+    // Primary
     { title },
     { name: "description", content: description },
 
-    // Indexing discipline
+    // Indexing
     { name: "robots", content: "index,follow" },
 
-    // Canonical discipline
+    // Canonical
     { rel: "canonical", href: url },
 
     // Open Graph
@@ -47,16 +55,22 @@ export function meta({ data }: Route.MetaArgs) {
     { property: "og:description", content: description },
     { property: "og:type", content: "website" },
     { property: "og:url", content: url },
+    { property: "og:site_name", content: "FinanceQuizzes.com" },
+    { property: "og:image", content: ogImage },
+    { property: "og:image:alt", content: "Stock Market Basics Quiz with 10 Questions" },
 
     // Twitter
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: title },
     { name: "twitter:description", content: description },
+    { name: "twitter:image", content: ogImage },
+    { name: "twitter:image:alt", content: "Stock Market Basics Quiz with 10 Questions" },
 
     // Theme
     { name: "theme-color", content: "#0B1B2B" },
   ];
 }
+
 
 export function loader({ request }: Route.LoaderArgs) {
   const siteUrl = getSiteUrlFromEnv(process.env);

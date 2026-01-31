@@ -23,19 +23,27 @@ interface LoaderData {
 
 
 export function meta({ data }: Route.MetaArgs) {
-  const title = "Finance Quiz | FinanceQuizzes.com";
+  const title =
+    "Finance Quiz (10 Questions) | FinanceQuizzes.com";
+
   const description =
-    "Fast, interactive finance quiz in a 10-question challenge. Broad concepts across everyday money, banking, credit, saving, investing, and planning.";
-  const url = data?.canonicalUrl ?? "https://www.financequizzes.com/finance-quiz";
+    "Test your finance fundamentals in under 3 minutes. A free 10-question quiz on banking, credit, saving, investing, and everyday money decisions. Instant score.";
+
+  const url =
+    data?.canonicalUrl ?? "https://www.financequizzes.com/finance-quiz";
+
+  const ogImage =
+    data?.ogImageUrl ?? "https://www.financequizzes.com/og/finance-quiz.png";
 
   return [
+    // Primary
     { title },
     { name: "description", content: description },
 
-    // Indexing discipline
+    // Indexing
     { name: "robots", content: "index,follow" },
 
-    // Canonical discipline
+    // Canonical
     { rel: "canonical", href: url },
 
     // Open Graph
@@ -43,11 +51,16 @@ export function meta({ data }: Route.MetaArgs) {
     { property: "og:description", content: description },
     { property: "og:type", content: "website" },
     { property: "og:url", content: url },
+    { property: "og:site_name", content: "FinanceQuizzes.com" },
+    { property: "og:image", content: ogImage },
+    { property: "og:image:alt", content: "Finance Quiz with 10 Questions" },
 
     // Twitter
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: title },
     { name: "twitter:description", content: description },
+    { name: "twitter:image", content: ogImage },
+    { name: "twitter:image:alt", content: "Finance Quiz with 10 Questions" },
 
     // Theme
     { name: "theme-color", content: "#0B1B2B" },

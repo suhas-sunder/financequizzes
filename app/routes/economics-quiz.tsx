@@ -23,19 +23,27 @@ interface LoaderData {
 
 
 export function meta({ data }: Route.MetaArgs) {
-  const title = "Economics Quiz | FinanceQuizzes.com";
+  const title =
+    "Economics Quiz (10 Questions) | FinanceQuizzes.com";
+
   const description =
-    "A fast 10-question economics quiz covering core concepts like supply and demand, scarcity, opportunity cost, inflation, GDP, unemployment, and market structures. Focused on economic awareness, not personal finance decisions.";
-  const url = data?.canonicalUrl ?? "https://www.financequizzes.com/economics-quiz";
+    "Test your economics fundamentals in under 3 minutes. A free 10-question quiz on supply and demand, scarcity, opportunity cost, inflation, GDP, unemployment, and market structures.";
+
+  const url =
+    data?.canonicalUrl ?? "https://www.financequizzes.com/economics-quiz";
+
+  const ogImage =
+    data?.ogImageUrl ?? "https://www.financequizzes.com/og/economics-quiz.png";
 
   return [
+    // Primary
     { title },
     { name: "description", content: description },
 
-    // Indexing discipline
+    // Indexing
     { name: "robots", content: "index,follow" },
 
-    // Canonical discipline
+    // Canonical
     { rel: "canonical", href: url },
 
     // Open Graph
@@ -43,16 +51,22 @@ export function meta({ data }: Route.MetaArgs) {
     { property: "og:description", content: description },
     { property: "og:type", content: "website" },
     { property: "og:url", content: url },
+    { property: "og:site_name", content: "FinanceQuizzes.com" },
+    { property: "og:image", content: ogImage },
+    { property: "og:image:alt", content: "Economics Quiz with 10 Questions" },
 
     // Twitter
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: title },
     { name: "twitter:description", content: description },
+    { name: "twitter:image", content: ogImage },
+    { name: "twitter:image:alt", content: "Economics Quiz with 10 Questions" },
 
     // Theme
     { name: "theme-color", content: "#0B1B2B" },
   ];
 }
+
 
 export function loader({ request }: Route.LoaderArgs) {
   const siteUrl = getSiteUrlFromEnv(process.env);

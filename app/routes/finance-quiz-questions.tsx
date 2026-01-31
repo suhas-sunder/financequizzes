@@ -22,20 +22,29 @@ interface LoaderData {
 }
 
 export function meta({ data }: Route.MetaArgs) {
-  const title = "Finance Quiz Questions (with Answers) | FinanceQuizzes.com";
+  const title =
+    "Finance Quiz Questions with Answers | FinanceQuizzes.com";
+
   const description =
-    "A broad, mixed set of finance quiz questions and answers across budgeting, banking, credit, investing, and basic economics. Filter, search, copy, or print.";
+    "Browse a free collection of finance quiz questions with clear answers. Covers budgeting, banking, credit, investing, and basic economics. Search, filter, copy, or print.";
+
   const url =
-    data?.canonicalUrl ?? "https://www.financequizzes.com/finance-quiz-questions";
+    data?.canonicalUrl ??
+    "https://www.financequizzes.com/finance-quiz-questions";
+
+  const ogImage =
+    data?.ogImageUrl ??
+    "https://www.financequizzes.com/og/finance-quiz-questions.png";
 
   return [
+    // Primary
     { title },
     { name: "description", content: description },
 
-    // Indexing discipline
+    // Indexing
     { name: "robots", content: "index,follow" },
 
-    // Canonical discipline
+    // Canonical
     { rel: "canonical", href: url },
 
     // Open Graph
@@ -43,16 +52,22 @@ export function meta({ data }: Route.MetaArgs) {
     { property: "og:description", content: description },
     { property: "og:type", content: "website" },
     { property: "og:url", content: url },
+    { property: "og:site_name", content: "FinanceQuizzes.com" },
+    { property: "og:image", content: ogImage },
+    { property: "og:image:alt", content: "Finance quiz questions with answers" },
 
     // Twitter
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: title },
     { name: "twitter:description", content: description },
+    { name: "twitter:image", content: ogImage },
+    { name: "twitter:image:alt", content: "Finance quiz questions with answers" },
 
     // Theme
     { name: "theme-color", content: "#0B1B2B" },
   ];
 }
+
 
 export function loader({ request }: Route.LoaderArgs) {
   const siteUrl = getSiteUrlFromEnv(process.env);
